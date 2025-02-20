@@ -4,17 +4,25 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -24,10 +32,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.example.guessthenumber.R
 import com.example.guessthenumber.domain.GameState
 import com.example.guessthenumber.ui.components.NumberEntry
 import com.example.guessthenumber.ui.theme.montserrat
@@ -143,23 +155,65 @@ fun GameScreen(modifier: Modifier = Modifier, viewModel: GameViewModel) {
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Display guess history if available
-            val guessHistory = viewModel.guessHistory
+            val guessHistory = viewModel.guessHistory // Ensure it's a SnapshotStateList<Int>
+
             if (guessHistory.isNotEmpty()) {
-                Text(
-                    "Guess History:",
-                    style = MaterialTheme.typography.titleMedium,
-                    fontFamily = montserrat
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-                guessHistory.forEach { guess ->
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp)
+                ) {
                     Text(
-                        "- $guess",
-                        style = MaterialTheme.typography.bodyLarge, fontFamily = montserrat
+                        text = "Guess History",
+                        style = MaterialTheme.typography.titleMedium,
+                        fontFamily = montserrat,
+                        color = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.padding(bottom = 8.dp)
                     )
+
+                    LazyColumn(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .heightIn(max = 200.dp)
+                            .clip(MaterialTheme.shapes.medium)
+                            .background(MaterialTheme.colorScheme.surfaceVariant)
+                            .padding(8.dp)
+                    ) {
+                        items(guessHistory.size) { index -> // ✅ Loop over indices
+                            val guess = guessHistory[index] // Get the value
+
+                            Card(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(vertical = 4.dp),
+                                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+                                elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+                            ) {
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(12.dp),
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Icon(
+                                        painter = painterResource(id = R.drawable.baseline_check_24),
+                                        contentDescription = "Guess Icon",
+                                        tint = MaterialTheme.colorScheme.primary,
+                                        modifier = Modifier.size(20.dp)
+                                    )
+                                    Spacer(modifier = Modifier.width(8.dp))
+                                    Text(
+                                        text = guess.toString(),
+                                        style = MaterialTheme.typography.bodyLarge,
+                                        fontFamily = montserrat,
+                                        color = MaterialTheme.colorScheme.onSurface
+                                    )
+                                }
+                            }
+                        }
+                    }
                 }
             }
-
             Spacer(modifier = Modifier.height(16.dp))
 
             if (gameState is GameState.Won || gameState is GameState.Lost) {

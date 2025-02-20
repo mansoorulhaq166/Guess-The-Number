@@ -35,7 +35,7 @@ fun NumberEntry(
         modifier = Modifier
             .fillMaxWidth()
             .background(backgroundColor)
-            .padding(16.dp)
+            .padding(top = 4.dp, start = 16.dp, end = 16.dp, bottom = 4.dp)
     ) {
         // Input field (non-editable)
         OutlinedTextField(
@@ -43,7 +43,7 @@ fun NumberEntry(
             onValueChange = {},
             readOnly = true,
             textStyle = androidx.compose.ui.text.TextStyle(
-                fontSize = 30.sp, textAlign = TextAlign.Center,
+                fontSize = 26.sp, textAlign = TextAlign.Center,
                 fontFamily = bungee
             ),
             modifier = Modifier
