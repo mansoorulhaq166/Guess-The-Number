@@ -10,14 +10,14 @@ import kotlinx.coroutines.flow.asStateFlow
 class GameViewModel : ViewModel() {
 
     // Difficulty state: "Easy", "Medium", or "Hard"
-    var selectedDifficulty: String = "Medium"
-        private set
+    private var selectedDifficulty: String = "Medium"
 
     // Guess history: stores all the guesses made by the user.
     val guessHistory = mutableStateListOf<Int>()
+    private var hintCount = 3
 
-    // Map difficulty to maximum attempts
-    private fun getMaxAttemptsForDifficulty(difficulty: String): Int {
+    // Map difficulty to maximum attempts and number range
+    fun getMaxAttemptsForDifficulty(difficulty: String): Int {
         return when (difficulty) {
             "Easy" -> 15
             "Hard" -> 5
@@ -25,8 +25,19 @@ class GameViewModel : ViewModel() {
         }
     }
 
-    // Initialize gameLogic with the max attempts based on the current difficulty.
-    private var gameLogic: GameLogic = GameLogic(maxAttempts = getMaxAttemptsForDifficulty(selectedDifficulty))
+    fun getNumberRangeForDifficulty(difficulty: String): IntRange {
+        return when (difficulty) {
+            "Easy" -> 1..50
+            "Hard" -> 1..200
+            else -> 1..100
+        }
+    }
+
+    // Initialize gameLogic with difficulty-based settings
+    private var gameLogic: GameLogic = GameLogic(
+        maxAttempts = getMaxAttemptsForDifficulty(selectedDifficulty),
+        numberRange = getNumberRangeForDifficulty(selectedDifficulty)
+    )
 
     private val _gameState = MutableStateFlow<GameState>(GameState.NotStarted)
     val gameState = _gameState.asStateFlow()
@@ -38,8 +49,12 @@ class GameViewModel : ViewModel() {
      */
     fun updateDifficulty(newDifficulty: String) {
         selectedDifficulty = newDifficulty
-        gameLogic = GameLogic(maxAttempts = getMaxAttemptsForDifficulty(selectedDifficulty))
+        gameLogic = GameLogic(
+            maxAttempts = getMaxAttemptsForDifficulty(selectedDifficulty),
+            numberRange = getNumberRangeForDifficulty(selectedDifficulty)
+        )
         guessHistory.clear()
+        hintCount = 3
         _gameState.value = GameState.NotStarted
     }
 
@@ -60,6 +75,20 @@ class GameViewModel : ViewModel() {
     fun restartGame() {
         gameLogic.resetGame()
         guessHistory.clear()
+        hintCount = 3
         _gameState.value = GameState.NotStarted
+    }
+
+    /**
+     * Request a hint.
+     * Decreases the hint count and returns a hint from the game logic.
+     */
+    fun requestHint(): String {
+        return if (hintCount > 0) {
+            hintCount--
+            gameLogic.provideHint()
+        } else {
+            "No more hints available!"
+        }
     }
 }

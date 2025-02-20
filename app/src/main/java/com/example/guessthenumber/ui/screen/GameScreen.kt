@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenuItem
@@ -24,21 +23,19 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.example.guessthenumber.domain.GameState
+import com.example.guessthenumber.ui.components.NumberEntry
 import com.example.guessthenumber.viewmodel.GameViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GameScreen(modifier: Modifier = Modifier, viewModel: GameViewModel) {
-    // Observe the game state from our ViewModel
     val gameState by viewModel.gameState.collectAsState()
     var guessInput by remember { mutableStateOf("") }
-    // New: Guess history (ensure your GameViewModel exposes this list)
-    val guessHistory = viewModel.guessHistory
+    var hintMessage by remember { mutableStateOf<String?>(null) }
 
-    // New: Difficulty selection state (only available when the game hasn't started)
+    // Difficulty selection state
     var selectedDifficulty by remember { mutableStateOf("Medium") }
     var difficultyExpanded by remember { mutableStateOf(false) }
     val difficultyOptions = listOf("Easy", "Medium", "Hard")
@@ -55,7 +52,7 @@ fun GameScreen(modifier: Modifier = Modifier, viewModel: GameViewModel) {
             modifier = Modifier.padding(bottom = 16.dp)
         )
 
-        // Difficulty selector shown only before the game begins
+        // Difficulty selection (only before game starts)
         if (gameState is GameState.NotStarted) {
             ExposedDropdownMenuBox(
                 expanded = difficultyExpanded,
@@ -66,10 +63,10 @@ fun GameScreen(modifier: Modifier = Modifier, viewModel: GameViewModel) {
                     onValueChange = {},
                     readOnly = true,
                     label = { Text("Select Difficulty") },
-                    trailingIcon = {
-                        ExposedDropdownMenuDefaults.TrailingIcon(expanded = difficultyExpanded)
-                    },
-                    modifier = Modifier.fillMaxWidth()
+                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = difficultyExpanded) },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .menuAnchor()
                 )
                 ExposedDropdownMenu(
                     expanded = difficultyExpanded,
@@ -81,7 +78,7 @@ fun GameScreen(modifier: Modifier = Modifier, viewModel: GameViewModel) {
                             onClick = {
                                 selectedDifficulty = difficulty
                                 difficultyExpanded = false
-                                // Optionally, update your ViewModel with the selected difficulty here
+                                viewModel.updateDifficulty(difficulty)
                             }
                         )
                     }
@@ -90,66 +87,54 @@ fun GameScreen(modifier: Modifier = Modifier, viewModel: GameViewModel) {
             Spacer(modifier = Modifier.height(16.dp))
         }
 
-        // Display instructions or current game messages
-        when (gameState) {
-            is GameState.NotStarted -> {
-                Text("Start guessing a number between 1 and 100")
-            }
+        // Display Game State messages
+        when (val state = gameState) {
+            is GameState.NotStarted -> Text("Start guessing a number between 1 and ${viewModel.getNumberRangeForDifficulty(selectedDifficulty)}")
             is GameState.InProgress -> {
-                val state = gameState as GameState.InProgress
-                Text("Attempts: ${state.attempts} / 10")
-                Text("Remaining attempts: ${10 - state.attempts}")
+                val maxAttempts = viewModel.getMaxAttemptsForDifficulty(selectedDifficulty)
+                Text("Attempts: ${state.attempts} / $maxAttempts")
+                Text("Remaining attempts: ${maxAttempts - state.attempts}")
                 state.message?.let { Text(it) }
             }
-            is GameState.Won -> {
-                val state = gameState as GameState.Won
-                Text("Congratulations! You guessed correctly in ${state.attempts} attempts.")
-            }
-            is GameState.Lost -> {
-                val state = gameState as GameState.Lost
-                Text("Game Over! The correct number was ${state.secretNumber}.")
-            }
+            is GameState.Won -> Text("🎉 Congratulations! You guessed correctly in ${state.attempts} attempts.")
+            is GameState.Lost -> Text("❌ Game Over! The correct number was ${state.secretNumber}.")
         }
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // New: Display the guess history if any guesses have been made
+        // Display guess history if available
+        val guessHistory = viewModel.guessHistory
         if (guessHistory.isNotEmpty()) {
             Text("Guess History:", style = MaterialTheme.typography.titleMedium)
             Spacer(modifier = Modifier.height(8.dp))
-            for (guess in guessHistory) {
-                Text("- $guess", style = MaterialTheme.typography.bodyLarge)
-            }
+            guessHistory.forEach { guess -> Text("- $guess", style = MaterialTheme.typography.bodyLarge) }
             Spacer(modifier = Modifier.height(16.dp))
         }
 
-        // Show the input field and submit button if the game is active
+        var enteredNumber by remember { mutableStateOf("") }
+
+        // Guess input field (Only during an active game)
         if (gameState is GameState.NotStarted || gameState is GameState.InProgress) {
-            OutlinedTextField(
-                value = guessInput,
-                onValueChange = { guessInput = it },
-                label = { Text("Enter your guess") },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                modifier = Modifier.fillMaxWidth()
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Button(
-                onClick = {
-                    // Validate input and submit guess
-                    guessInput.toIntOrNull()?.let { guess ->
-                        viewModel.submitGuess(guess)
-                        guessInput = ""  // Clear input after submission
+            NumberEntry(
+                enteredNumber = enteredNumber,
+                onNumberClick = { number ->
+                    if (enteredNumber.length < 3) { // Limit input length
+                        enteredNumber += number
                     }
                 },
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text("Submit Guess")
-            }
+                onDelete = {
+                    enteredNumber = enteredNumber.dropLast(1)
+                },
+                onSubmit = {
+                    if (enteredNumber.isNotEmpty()) {
+                        viewModel.submitGuess(enteredNumber.toInt())
+                        enteredNumber = "" // Clear after submitting
+                    }
+                }
+            )
         }
 
-        // When the game concludes, show a restart button
+        // Restart button (Only after game ends)
         if (gameState is GameState.Won || gameState is GameState.Lost) {
             Spacer(modifier = Modifier.height(16.dp))
             Button(
@@ -157,13 +142,28 @@ fun GameScreen(modifier: Modifier = Modifier, viewModel: GameViewModel) {
                     viewModel.restartGame()
                     guessInput = ""
                 },
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.secondary
-                ),
+                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.secondary),
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text("Restart Game")
             }
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // Hint button (Enabled only during an active game)
+        Button(
+            onClick = { hintMessage = viewModel.requestHint() },
+            modifier = Modifier.fillMaxWidth(),
+            enabled = gameState is GameState.InProgress
+        ) {
+            Text("Get a Hint")
+        }
+
+        // Display hint message if available
+        hintMessage?.let {
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(it, style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.primary)
         }
     }
 }
