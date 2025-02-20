@@ -1,6 +1,22 @@
 package com.example.guessthenumber.ui.theme
 
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import com.example.guessthenumber.R
+
+val luckiestGuy = FontFamily(
+    Font(R.font.luckiest_guy_regular, FontWeight.Normal)
+)
+
+val bungee = FontFamily(
+    Font(R.font.bungee_regular, FontWeight.Normal)
+)
+
+val montserrat = FontFamily(
+    Font(R.font.montserrat_bold, FontWeight.Normal)
+)
 
 // Custom Modern Color Palette
 val PrimaryColor = Color(0xFF0D47A1)      // Deep Blue

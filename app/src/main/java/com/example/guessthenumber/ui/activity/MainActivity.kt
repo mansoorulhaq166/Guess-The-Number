@@ -1,6 +1,7 @@
 package com.example.guessthenumber.ui.activity
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -35,8 +36,11 @@ class MainActivity : ComponentActivity() {
                     ) {
                         composable(Destinations.MAIN_SCREEN) {
                             MainScreen(
-                                onPlayGame = { navController.navigate(Destinations.GAME_SCREEN) },
-                                onHighScores = {
+                                onPlayGame = {
+                                    navController.navigate(Destinations.GAME_SCREEN)
+                                    Log.d("TAG", "onCreate: Clicked")
+                                             },
+                                onLeaderboard = {
                                     // TODO: Navigate to High Scores screen when implemented
                                 },
                                 onSettings = {

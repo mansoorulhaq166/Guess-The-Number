@@ -1,24 +1,22 @@
 package com.example.guessthenumber.ui.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.guessthenumber.R
+import com.example.guessthenumber.ui.theme.bungee
+import com.example.guessthenumber.ui.theme.luckiestGuy
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NumberEntry(
     enteredNumber: String,
@@ -26,94 +24,104 @@ fun NumberEntry(
     onDelete: () -> Unit,
     onSubmit: () -> Unit
 ) {
+
+    val backgroundColor = Color(0xFF0B0D2E) // Main Screen Dark Background
+    val buttonBackground = Color(0xFF1A1C48) // Dark Blue Gray
+    val deleteBackground = Color(0xFFFF8000) // Soft Dark Red
+    val inputBackground = Color(0xFF14163A) // Slightly Lighter Deep Blue
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(12.dp)
+            .background(backgroundColor)
+            .padding(16.dp)
     ) {
         // Input field (non-editable)
         OutlinedTextField(
-            value = enteredNumber.ifEmpty { "Enter Your Guess" },
+            value = enteredNumber.ifEmpty { "?" },
             onValueChange = {},
             readOnly = true,
-            textStyle = androidx.compose.ui.text.TextStyle(fontSize = 22.sp, textAlign = TextAlign.Center),
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                containerColor = MaterialTheme.colorScheme.surface,
-                cursorColor = MaterialTheme.colorScheme.primary,
-                focusedBorderColor = MaterialTheme.colorScheme.primary,
-                unfocusedBorderColor = MaterialTheme.colorScheme.outline
+            textStyle = androidx.compose.ui.text.TextStyle(
+                fontSize = 30.sp, textAlign = TextAlign.Center,
+                fontFamily = bungee
             ),
             modifier = Modifier
-                .fillMaxWidth(0.8f)
-                .padding(bottom = 12.dp)
+                .fillMaxWidth()
+                .background(inputBackground, shape = MaterialTheme.shapes.medium)
+                .padding(bottom = 8.dp)
         )
 
-        // Number Buttons (1-9, 0)
-        val numberButtons = listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 0)
+        val numberButtons = listOf(1, 2, 3, 4, 5, 6, 7, 8, 9)
 
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(3),
-            modifier = Modifier.padding(4.dp)
-        ) {
-            items(numberButtons) { number ->
-                Button(
-                    onClick = { onNumberClick(number.toString()) },
-                    modifier = Modifier
-                        .padding(6.dp)
-                        .size(56.dp)
-                        .clip(CircleShape),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.secondary,
-                        contentColor = Color.White
-                    )
-                ) {
-                    Text(text = number.toString(), fontSize = 18.sp)
+        // Create 3x3 grid with numbers (1-9)
+        for (i in numberButtons.chunked(3)) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 4.dp),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                i.forEach { number ->
+                    TextButton(
+                        onClick = { onNumberClick(number.toString()) },
+                        modifier = Modifier
+                            .size(60.dp)
+                            .clip(CircleShape)
+                            .background(buttonBackground),
+                        colors = ButtonDefaults.textButtonColors(
+                            contentColor = Color.White
+                        )
+                    ) {
+                        Text(text = number.toString(), fontSize = 22.sp, fontFamily = luckiestGuy)
+                    }
                 }
             }
         }
 
-        // Delete & Submit Buttons
+        // Last row with 0, Delete, and Submit buttons
         Row(
-            horizontalArrangement = Arrangement.SpaceEvenly,
             modifier = Modifier
-                .fillMaxWidth(0.8f)
-                .padding(top = 12.dp)
+                .fillMaxWidth()
+                .padding(top = 12.dp),
+            horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            IconButton(
+            TextButton(
+                onClick = { onNumberClick("0") },
+                modifier = Modifier
+                    .size(60.dp)
+                    .clip(CircleShape)
+                    .background(buttonBackground),
+                colors = ButtonDefaults.textButtonColors(
+                    contentColor = Color.White
+                )
+            ) {
+                Text(text = "0", fontSize = 22.sp, fontFamily = luckiestGuy)
+            }
+
+            FilledIconButton(
                 onClick = onDelete,
-                modifier = Modifier.size(52.dp)
+                colors = IconButtonDefaults.filledIconButtonColors(containerColor = deleteBackground),
+                modifier = Modifier.size(54.dp)
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.baseline_backspace_24),
                     contentDescription = "Delete",
-                    tint = MaterialTheme.colorScheme.error,
-                    modifier = Modifier.size(40.dp)
+                    tint = Color.Black
                 )
             }
 
-            IconButton(
+            FilledIconButton(
                 onClick = onSubmit,
-                modifier = Modifier.size(52.dp)
+                colors = IconButtonDefaults.filledIconButtonColors(containerColor = Color(0xFF7CFC00)), // Light green
+                modifier = Modifier.size(54.dp)
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.baseline_check_24),
                     contentDescription = "Submit",
-                    tint = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.size(40.dp)
+                    tint = Color.Black
                 )
             }
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun NumberEntryPreview() {
-    NumberEntry(
-        enteredNumber = "23",
-        onNumberClick = {},
-        onDelete = {},
-        onSubmit = {}
-    )
 }
