@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.guessthenumber"
+    namespace = "com.guessmaster.challenge"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.guessthenumber"
+        applicationId = "com.guessmaster.challenge"
         minSdk = 23
         targetSdk = 35
         versionCode = 1
