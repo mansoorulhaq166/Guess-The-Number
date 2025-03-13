@@ -1,0 +1,10 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@color/primary" />
+    <!-- Add your logo drawable here -->
+    <item
+        android:drawable="@drawable/app_icon"
+        android:width="220dp"
+        android:height="220dp"
+        android:gravity="center"
+        />
+</layer-list>

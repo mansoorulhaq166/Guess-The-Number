@@ -2,4 +2,8 @@
 <resources>
 
     <style name="Theme.GuessTheNumber" parent="android:Theme.Material.Light.NoActionBar" />
+
+    <style name="SplashTheme" parent="Theme.GuessTheNumber">
+        <item name="android:windowBackground">@drawable/splash_background</item>
+    </style>
 </resources>

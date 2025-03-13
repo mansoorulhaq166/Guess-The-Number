@@ -48,13 +48,11 @@ fun MainScreen(
     onSettings: () -> Unit,
     onLeaderboard: () -> Unit
 ) {
-    var showSettingsButton by remember { mutableStateOf(false) }
-    var showLeaderBoardButton by remember { mutableStateOf(false) }
+    val showSettingsButton by remember { mutableStateOf(false) }
 
     Box(
         modifier = Modifier
             .fillMaxSize()
-//            .background(Color(0xFF0B0D2E)) // Dark background
     ) {
         // Background Image
         Image(
@@ -87,14 +85,12 @@ fun MainScreen(
                 gradient = listOf(Color(0xFF4A90E2), Color(0xFF7B1FA2))
             )
             Spacer(modifier = Modifier.height(16.dp))
-            if (showSettingsButton) {
-                GradientButton(
-                    text = "Settings",
-                    onClick = onSettings,
-                    gradient = listOf(Color(0xFFFFA726), Color(0xFFFF7043))
-                )
-                Spacer(modifier = Modifier.height(16.dp))
-            }
+            GradientButton(
+                text = "Settings",
+                onClick = onSettings,
+                gradient = listOf(Color(0xFFFFA726), Color(0xFFFF7043))
+            )
+            Spacer(modifier = Modifier.height(16.dp))
             if (showSettingsButton) {
                 GradientButton(
                     text = "Leaderboard",
