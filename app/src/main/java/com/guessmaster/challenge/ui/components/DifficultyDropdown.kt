@@ -9,6 +9,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.guessmaster.challenge.domain.GameState
 import com.guessmaster.challenge.ui.theme.montserrat
 import com.guessmaster.challenge.viewmodel.GameViewModel
@@ -62,7 +63,7 @@ fun DifficultyDropdown(
 @Composable
 fun GameStatus(
     gameState: GameState,
-    viewModel: GameViewModel,
+    viewModel: GameViewModel = hiltViewModel(),
     maxNumber: Int,
     selectedDifficulty: String
 ) {

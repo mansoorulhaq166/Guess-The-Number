@@ -27,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.guessmaster.challenge.R
 import com.guessmaster.challenge.domain.GameState
@@ -39,26 +40,49 @@ import com.guessmaster.challenge.ui.components.RestartButton
 import com.guessmaster.challenge.ui.theme.montserrat
 import com.guessmaster.challenge.viewmodel.GameViewModel
 
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalHapticFeedback
+import com.guessmaster.challenge.viewmodel.SettingsViewModel
+
 @Composable
-fun GameScreen(navController: NavController, viewModel: GameViewModel) {
+fun GameScreen(
+    navController: NavController, viewModel: GameViewModel = hiltViewModel(),
+    settingsViewModel: SettingsViewModel = hiltViewModel()
+) {
     val gameState by viewModel.gameState.collectAsState()
     var showGuessHistory by remember { mutableStateOf(false) }
     var showHintDialog by remember { mutableStateOf(false) }
     var enteredNumber by remember { mutableStateOf("") }
     var difficultyExpanded by remember { mutableStateOf(false) }
     var showExitConfirmation by remember { mutableStateOf(false) } // Back press confirmation dialog
-
     var selectedDifficulty by remember { mutableStateOf("Medium") }
+
+    val isHapticEnabled by settingsViewModel.isHapticEnabled.collectAsState(initial = true)
+    val isSoundEnabled by settingsViewModel.isSoundEnabled.collectAsState(initial = true)
+    val hapticFeedback = LocalHapticFeedback.current // Get haptic feedback instance
+
+    fun triggerStrongHaptic() {
+        if (isHapticEnabled) {
+            hapticFeedback.performHapticFeedback(HapticFeedbackType.LongPress)
+        }
+    }
+
+    fun triggerLightHaptic() {
+        if (isHapticEnabled) {
+            hapticFeedback.performHapticFeedback(HapticFeedbackType.TextHandleMove)
+        }
+    }
 
     // Handle back press only if the game is in progress
     BackHandler(enabled = gameState is GameState.InProgress) {
+        triggerStrongHaptic()
         showExitConfirmation = true
     }
 
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFF0B0D2E)) // Dark-themed background
+            .background(Color(0xFF0B0D2E))
     ) {
         Column(
             modifier = Modifier
@@ -108,7 +132,10 @@ fun GameScreen(navController: NavController, viewModel: GameViewModel) {
                         contentDescription = "Hint",
                         modifier = Modifier
                             .size(40.dp)
-                            .clickable { showHintDialog = true }
+                            .clickable {
+                                triggerLightHaptic()
+                                showHintDialog = true
+                            }
                     )
 
                     Icon(
@@ -116,7 +143,10 @@ fun GameScreen(navController: NavController, viewModel: GameViewModel) {
                         contentDescription = "Guess History",
                         modifier = Modifier
                             .size(40.dp)
-                            .clickable { showGuessHistory = true }
+                            .clickable {
+                                triggerLightHaptic()
+                                showGuessHistory = true
+                            }
                     )
                 }
 
@@ -134,6 +164,7 @@ fun GameScreen(navController: NavController, viewModel: GameViewModel) {
             // Restart Button (Only visible after a win or loss)
             if (gameState is GameState.Won || gameState is GameState.Lost) {
                 RestartButton {
+                    triggerStrongHaptic()
                     viewModel.restartGame()
                     enteredNumber = ""
                 }
@@ -151,11 +182,20 @@ fun GameScreen(navController: NavController, viewModel: GameViewModel) {
                 NumberEntry(
                     enteredNumber = enteredNumber,
                     onNumberClick = { if (enteredNumber.length < 3) enteredNumber += it },
-                    onDelete = { enteredNumber = enteredNumber.dropLast(1) },
+                    onDelete = {
+                        triggerLightHaptic()
+                        enteredNumber = enteredNumber.dropLast(1)
+                    },
                     onSubmit = {
                         enteredNumber.toIntOrNull()?.let {
                             viewModel.submitGuess(it)
                             enteredNumber = ""
+
+                            when (viewModel.gameState.value) {
+                                is GameState.Won -> triggerStrongHaptic()
+                                is GameState.Lost -> triggerStrongHaptic()
+                                else -> triggerLightHaptic()
+                            }
                         }
                     }
                 )
@@ -170,6 +210,7 @@ fun GameScreen(navController: NavController, viewModel: GameViewModel) {
             text = { Text("Your progress will be lost. Are you sure you want to exit?") },
             confirmButton = {
                 TextButton(onClick = {
+                    triggerStrongHaptic()
                     showExitConfirmation = false
                     navController.popBackStack()
                     viewModel.restartGame()

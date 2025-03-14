@@ -24,12 +24,13 @@ import com.guessmaster.challenge.ui.screen.MainScreen
 import com.guessmaster.challenge.ui.screen.SettingsScreen
 import com.guessmaster.challenge.ui.theme.GuessTheNumberTheme
 import com.guessmaster.challenge.viewmodel.GameViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private val viewModel: GameViewModel by viewModels()
 

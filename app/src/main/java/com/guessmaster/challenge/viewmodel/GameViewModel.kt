@@ -4,17 +4,23 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import com.guessmaster.challenge.domain.GameLogic
 import com.guessmaster.challenge.domain.GameState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import javax.inject.Inject
 
-class GameViewModel : ViewModel() {
+@HiltViewModel
+class GameViewModel @Inject constructor(
+    private val gameLogic: GameLogic
+) : ViewModel() {
 
-    // Difficulty state: "Easy", "Medium", or "Hard"
     private var selectedDifficulty: String = "Medium"
 
-    // Guess history: stores all the guesses made by the user.
     val guessHistory = mutableStateListOf<Int>()
     private var hintCount = 2
+
+    private val _gameState = MutableStateFlow<GameState>(GameState.NotStarted)
+    val gameState = _gameState.asStateFlow()
 
     // Map difficulty to maximum attempts and number range
     fun getMaxAttemptsForDifficulty(difficulty: String): Int {
@@ -33,15 +39,6 @@ class GameViewModel : ViewModel() {
         }
     }
 
-    // Initialize gameLogic with difficulty-based settings
-    private var gameLogic: GameLogic = GameLogic(
-        maxAttempts = getMaxAttemptsForDifficulty(selectedDifficulty),
-        numberRange = getNumberRangeForDifficulty(selectedDifficulty)
-    )
-
-    private val _gameState = MutableStateFlow<GameState>(GameState.NotStarted)
-    val gameState = _gameState.asStateFlow()
-
     /**
      * Update the selected difficulty.
      * This reinitializes the game logic with new parameters,
@@ -49,10 +46,14 @@ class GameViewModel : ViewModel() {
      */
     fun updateDifficulty(newDifficulty: String) {
         selectedDifficulty = newDifficulty
-        gameLogic = GameLogic(
+        gameLogic.updateGameSettings(
             maxAttempts = getMaxAttemptsForDifficulty(selectedDifficulty),
             numberRange = getNumberRangeForDifficulty(selectedDifficulty)
         )
+//        gameLogic = GameLogic(
+//            maxAttempts = getMaxAttemptsForDifficulty(selectedDifficulty),
+//            numberRange = getNumberRangeForDifficulty(selectedDifficulty)
+//        )
         guessHistory.clear()
         hintCount = 3
         _gameState.value = GameState.NotStarted

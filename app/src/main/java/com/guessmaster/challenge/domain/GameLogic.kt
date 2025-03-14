@@ -1,12 +1,22 @@
 package com.guessmaster.challenge.domain
 
+import javax.inject.Inject
 import kotlin.math.abs
 
-class GameLogic(private var maxAttempts: Int = 10, private var numberRange: IntRange = 1..100) {
+class GameLogic @Inject constructor() {
+
+    private var maxAttempts: Int = 10
+    private var numberRange: IntRange = 1..100
     private var secretNumber: Int = generateSecretNumber()
     private var attempts = 0
     private val guessDiffs = mutableListOf<Int>()
     private var closestGuess: Int? = null
+
+    fun updateGameSettings(maxAttempts: Int, numberRange: IntRange) {
+        this.maxAttempts = maxAttempts
+        this.numberRange = numberRange
+        resetGame()  // Restart the game with new settings
+    }
 
     fun evaluateGuess(guess: Int): GameState {
         attempts++
