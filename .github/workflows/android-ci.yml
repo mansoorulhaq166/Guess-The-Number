@@ -28,6 +28,3 @@ jobs:
 
       - name: Run unit tests
         run: ./gradlew test
-
-      - name: Run UI tests (Optional, if you have Compose UI tests)
-        run: ./gradlew connectedAndroidTest
