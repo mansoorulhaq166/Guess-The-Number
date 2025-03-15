@@ -88,7 +88,7 @@ class GameLogic @Inject constructor() {
         return hints.take(hintLevel + 1).joinToString("\n")
     }
 
-    fun resetGame() {
+    private fun resetGame() {
         secretNumber = generateSecretNumber()
         attempts = 0
         guessDiffs.clear()

@@ -19,3 +19,8 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+#-keep class dagger.hilt.internal.** { *; }
+#-keep class com.guessmaster.challenge.**_HiltComponents { *; }
+
+#-keep class androidx.navigation.NavDirections { *; }

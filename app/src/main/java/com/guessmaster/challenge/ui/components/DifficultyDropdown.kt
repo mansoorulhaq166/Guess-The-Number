@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.guessmaster.challenge.domain.GameState
 import com.guessmaster.challenge.ui.theme.montserrat
-import com.guessmaster.challenge.viewmodel.GameViewModel
+import com.guessmaster.challenge.data.viewmodel.GameViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

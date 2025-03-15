@@ -38,7 +38,7 @@ import com.guessmaster.challenge.R
 import com.guessmaster.challenge.ui.components.settings.SettingOption
 import com.guessmaster.challenge.ui.components.settings.SettingToggle
 import com.guessmaster.challenge.ui.theme.montserrat
-import com.guessmaster.challenge.viewmodel.SettingsViewModel
+import com.guessmaster.challenge.data.viewmodel.SettingsViewModel
 
 @Composable
 fun SettingsScreen(navController: NavController, viewModel: SettingsViewModel = hiltViewModel()) {
@@ -106,7 +106,7 @@ fun SettingsScreen(navController: NavController, viewModel: SettingsViewModel = 
                     label = "Sound Effects",
                     checked = isSoundEnabled,
                     onCheckedChange = {
-                        viewModel.saveSoundEnabled(it)
+                        viewModel.toggleSound(it)
                     }
                 )
 
@@ -117,7 +117,7 @@ fun SettingsScreen(navController: NavController, viewModel: SettingsViewModel = 
                     label = "Haptic Feedback",
                     checked = isHapticEnabled,
                     onCheckedChange = {
-                        viewModel.saveHapticEnabled(it)
+                        viewModel.toggleHaptic(it)
                     }
                 )
 

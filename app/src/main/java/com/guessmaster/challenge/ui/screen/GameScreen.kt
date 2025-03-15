@@ -38,11 +38,11 @@ import com.guessmaster.challenge.ui.components.HintDialog
 import com.guessmaster.challenge.ui.components.NumberEntry
 import com.guessmaster.challenge.ui.components.RestartButton
 import com.guessmaster.challenge.ui.theme.montserrat
-import com.guessmaster.challenge.viewmodel.GameViewModel
+import com.guessmaster.challenge.data.viewmodel.GameViewModel
 
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
-import com.guessmaster.challenge.viewmodel.SettingsViewModel
+import com.guessmaster.challenge.data.viewmodel.SettingsViewModel
 
 @Composable
 fun GameScreen(
