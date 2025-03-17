@@ -22,25 +22,8 @@ GuessMaster is a simple yet engaging number guessing game where players attempt 
 ## 📱 Screenshots
 | Home Screen | In-Game UI | Victory Screen |
 |------------|-----------|---------------|
-| ![Home]([https://your-image-url.com/home.png](https://github.com/mansoorulhaq166/Guess-The-Number/blob/main/Screenshots/screenshot_1.png)) | ![Game]([https://your-image-url.com/game.png](https://github.com/mansoorulhaq166/Guess-The-Number/blob/main/Screenshots/screenshot_3.png)) | ![Win]([https://your-image-url.com/win.png](https://github.com/mansoorulhaq166/Guess-The-Number/blob/main/Screenshots/screenshot_5.png)) |
+| ![Home]([https://github.com/mansoorulhaq166/Guess-The-Number/blob/main/Screenshots/screenshot_1.png]) | ![Game]([https://github.com/mansoorulhaq166/Guess-The-Number/blob/main/Screenshots/screenshot_3.png]) | ![Win]([https://github.com/mansoorulhaq166/Guess-The-Number/blob/main/Screenshots/screenshot_5.png]) |
 
-## 🚀 Getting Started
-### Prerequisites
-Make sure you have the following installed:
-- Android Studio (Latest Version)
-- Kotlin 1.8+
-- Gradle 8.0+
-- Minimum SDK 23+
-
-### Clone the Repository
-```sh
-git clone https://github.com/mansoorulhaq166/Guess-The-Number.git
-```
-
-### Build & Run the App
-1. Open the project in **Android Studio**.
-2. Sync Gradle dependencies.
-3. Run the app on an emulator or a physical device.
 
 ## 🏗️ Architecture
 The project follows **MVVM (Model-View-ViewModel)** architecture with **StateFlow** for state management.
