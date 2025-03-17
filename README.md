@@ -30,12 +30,11 @@ Make sure you have the following installed:
 - Android Studio (Latest Version)
 - Kotlin 1.8+
 - Gradle 8.0+
-- Minimum SDK 21+
+- Minimum SDK 23+
 
 ### Clone the Repository
 ```sh
-git clone https://github.com/yourusername/GuessMaster.git
-cd GuessMaster
+git clone https://github.com/mansoorulhaq166/Guess-The-Number.git
 ```
 
 ### Build & Run the App
@@ -61,4 +60,4 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 💬 Contact
 For any questions or feedback, reach out via:
 - Email: mansoorulhaq166@gmail.com
-- LinkedIn: [Mansoorulhaq13](https://linkedin.com/in/yourprofile)
+- LinkedIn: [Mansoorulhaq13](https://linkedin.com/in/mansoor-ul-haq13)
