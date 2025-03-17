@@ -22,8 +22,7 @@ GuessMaster is a simple yet engaging number guessing game where players attempt 
 ## 📱 Screenshots
 | Home Screen | In-Game UI | Victory Screen |
 |------------|-----------|---------------|
-| ![Home]([https://github.com/mansoorulhaq166/Guess-The-Number/blob/main/Screenshots/screenshot_1.png]) | ![Game]([https://github.com/mansoorulhaq166/Guess-The-Number/blob/main/Screenshots/screenshot_3.png]) | ![Win]([https://github.com/mansoorulhaq166/Guess-The-Number/blob/main/Screenshots/screenshot_5.png]) |
-
+| ![Home](https://github.com/mansoorulhaq166/Guess-The-Number/blob/main/Screenshots/screenshot_1.png) | ![Game](https://github.com/mansoorulhaq166/Guess-The-Number/blob/main/Screenshots/screenshot_3.png) | ![Win](https://github.com/mansoorulhaq166/Guess-The-Number/blob/main/Screenshots/screenshot_5.png) |
 
 ## 🏗️ Architecture
 The project follows **MVVM (Model-View-ViewModel)** architecture with **StateFlow** for state management.
