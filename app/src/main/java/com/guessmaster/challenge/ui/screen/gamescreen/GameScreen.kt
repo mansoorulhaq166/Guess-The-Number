@@ -11,11 +11,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -36,6 +34,7 @@ import com.guessmaster.challenge.data.models.GameState
 import com.guessmaster.challenge.ui.components.game.GameStatus
 import com.guessmaster.challenge.ui.components.game.GuessHistoryDialog
 import com.guessmaster.challenge.ui.components.game.HintDialog
+import com.guessmaster.challenge.ui.components.game.ExitDialog
 import com.guessmaster.challenge.ui.components.game.NumberEntry
 import com.guessmaster.challenge.ui.components.game.RestartButton
 import com.guessmaster.challenge.ui.components.main.DifficultyDropdown
@@ -44,36 +43,30 @@ import com.guessmaster.challenge.ui.theme.montserrat
 
 @Composable
 fun GameScreen(
-    navController: NavController, viewModel: GameViewModel = hiltViewModel(),
+    navController: NavController,
+    viewModel: GameViewModel = hiltViewModel(),
     settingsViewModel: SettingsViewModel = hiltViewModel()
 ) {
     val gameState by viewModel.gameState.collectAsState()
-    var showGuessHistory by remember { mutableStateOf(false) }
-    var showHintDialog by remember { mutableStateOf(false) }
     var enteredNumber by remember { mutableStateOf("") }
     var difficultyExpanded by remember { mutableStateOf(false) }
-    var showExitConfirmation by remember { mutableStateOf(false) } // Back press confirmation dialog
+    var showExitConfirmation by remember { mutableStateOf(false) }
     var selectedDifficulty by remember { mutableStateOf("Medium") }
 
     val isHapticEnabled by settingsViewModel.isHapticEnabled.collectAsState(initial = true)
-    val isSoundEnabled by settingsViewModel.isSoundEnabled.collectAsState(initial = true)
-    val hapticFeedback = LocalHapticFeedback.current // Get haptic feedback instance
+    val hapticFeedback = LocalHapticFeedback.current
 
-    fun triggerStrongHaptic() {
+    var showHintDialog by remember { mutableStateOf(false) }
+    var showGuessHistory by remember { mutableStateOf(false) }
+
+    fun triggerHaptic(type: HapticFeedbackType) {
         if (isHapticEnabled) {
-            hapticFeedback.performHapticFeedback(HapticFeedbackType.LongPress)
+            hapticFeedback.performHapticFeedback(type)
         }
     }
 
-    fun triggerLightHaptic() {
-        if (isHapticEnabled) {
-            hapticFeedback.performHapticFeedback(HapticFeedbackType.TextHandleMove)
-        }
-    }
-
-    // Handle back press only if the game is in progress
     BackHandler(enabled = gameState is GameState.InProgress) {
-        triggerStrongHaptic()
+        triggerHaptic(HapticFeedbackType.LongPress)
         showExitConfirmation = true
     }
 
@@ -82,151 +75,121 @@ fun GameScreen(
             .fillMaxSize()
             .background(Color(0xFF0B0D2E))
     ) {
-        // Guess History Dialog
         if (showGuessHistory) {
             GuessHistoryDialog(viewModel.guessHistory) { showGuessHistory = false }
         }
+    }
 
-        // Hint Dialog
-        if (showHintDialog) {
-            HintDialog(viewModel.requestHint()) { showHintDialog = false }
+    if (showHintDialog) {
+        HintDialog(viewModel.requestHint()) { showHintDialog = false }
+    }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(top = 32.dp, start = 16.dp, end = 16.dp, bottom = 16.dp),
+        verticalArrangement = Arrangement.Top,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            "Guess The Number!",
+            style = MaterialTheme.typography.headlineLarge,
+            color = Color.White,
+            fontFamily = montserrat
+        )
+
+        if (gameState is GameState.NotStarted) {
+            DifficultyDropdown(
+                selectedDifficulty,
+                difficultyExpanded,
+                { difficultyExpanded = it }) { difficulty ->
+                selectedDifficulty = difficulty
+                difficultyExpanded = false
+                viewModel.updateDifficulty(difficulty)
+            }
         }
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(top = 48.dp, start = 16.dp, end = 16.dp, bottom = 16.dp),
-            verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            // Game Title
-            Text(
-                "Guess The Number!",
-                style = MaterialTheme.typography.headlineLarge,
-                color = Color.White,
-                fontFamily = montserrat
-            )
 
-            // Difficulty Selection (Only visible before the game starts)
-            if (gameState is GameState.NotStarted) {
-                DifficultyDropdown(selectedDifficulty, difficultyExpanded, {
-                    difficultyExpanded = it
-                }) { difficulty ->
-                    selectedDifficulty = difficulty
-                    difficultyExpanded = false
-                    viewModel.updateDifficulty(difficulty)
-                }
+        val maxNumber = when (selectedDifficulty) {
+            "Easy" -> 50
+            "Medium" -> 100
+            "Hard" -> 200
+            else -> 100
+        }
+
+        GameStatus(gameState, viewModel, maxNumber, selectedDifficulty)
+
+        if (gameState is GameState.Won || gameState is GameState.Lost) {
+            RestartButton {
+                triggerHaptic(HapticFeedbackType.LongPress)
+                viewModel.restartGame()
+                enteredNumber = ""
             }
+        }
 
-            // Determine the number range based on selected difficulty
-            val maxNumber = when (selectedDifficulty) {
-                "Easy" -> 50
-                "Medium" -> 100
-                "Hard" -> 200
-                else -> 100
-            }
-
-            // Display Game Status (Attempts, Messages, Win/Loss)
-            GameStatus(gameState, viewModel, maxNumber, selectedDifficulty)
-
-            // Restart Button (Only visible after a win or loss)
-            if (gameState is GameState.Won || gameState is GameState.Lost) {
-                Box(
+        if (gameState is GameState.InProgress) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.baseline_hint),
+                    contentDescription = "Hint",
                     modifier = Modifier
-                        .fillMaxSize(), // Takes full space
-                    contentAlignment = Alignment.Center // Centers content
-                ) {
-                    RestartButton {
-                        triggerStrongHaptic()
-                        viewModel.restartGame()
-                        enteredNumber = ""
-                    }
-                }
-            }
-
-            // Hint & History Icons
-            if (gameState is GameState.InProgress) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceEvenly
-                ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.baseline_hint),
-                        contentDescription = "Hint",
-                        modifier = Modifier
-                            .size(40.dp)
-                            .clickable {
-                                triggerLightHaptic()
-                                showHintDialog = true
-                            },
-                        tint = Color.White
-                    )
-
-                    Icon(
-                        painter = painterResource(id = R.drawable.baseline_history_24),
-                        contentDescription = "Guess History",
-                        modifier = Modifier
-                            .size(40.dp)
-                            .clickable {
-                                triggerLightHaptic()
-                                showGuessHistory = true
-                            },
-                        tint = Color.White
-                    )
-                }
-            }
-        }
-
-        // Numeric Input Pad (Only visible when the game is active)
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(bottom = 24.dp),
-            contentAlignment = Alignment.BottomCenter
-        ) {
-            if (gameState is GameState.NotStarted || gameState is GameState.InProgress) {
-                NumberEntry(
-                    enteredNumber = enteredNumber,
-                    onNumberClick = { if (enteredNumber.length < 3) enteredNumber += it },
-                    onDelete = {
-                        triggerLightHaptic()
-                        enteredNumber = enteredNumber.dropLast(1)
-                    },
-                    onSubmit = {
-                        enteredNumber.toIntOrNull()?.let {
-                            viewModel.submitGuess(it)
-                            enteredNumber = ""
-
-                            when (viewModel.gameState.value) {
-                                is GameState.Won -> triggerStrongHaptic()
-                                is GameState.Lost -> triggerStrongHaptic()
-                                else -> triggerLightHaptic()
-                            }
-                        }
-                    }
+                        .size(40.dp)
+                        .clickable {
+                            triggerHaptic(HapticFeedbackType.TextHandleMove); showHintDialog =
+                            true
+                        },
+                    tint = Color.White
+                )
+                Icon(
+                    painter = painterResource(id = R.drawable.baseline_history_24),
+                    contentDescription = "Guess History",
+                    modifier = Modifier
+                        .size(40.dp)
+                        .clickable {
+                            triggerHaptic(HapticFeedbackType.TextHandleMove); showGuessHistory =
+                            true
+                        },
+                    tint = Color.White
                 )
             }
         }
     }
 
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(bottom = 24.dp),
+        contentAlignment = Alignment.BottomCenter
+    ) {
+        if (gameState is GameState.NotStarted || gameState is GameState.InProgress) {
+            NumberEntry(
+                enteredNumber = enteredNumber,
+                onNumberClick = { if (enteredNumber.length < 3) enteredNumber += it },
+                onDelete = {
+                    triggerHaptic(HapticFeedbackType.TextHandleMove); enteredNumber =
+                    enteredNumber.dropLast(1)
+                },
+                onSubmit = {
+                    enteredNumber.toIntOrNull()?.let {
+                        viewModel.submitGuess(it)
+                        enteredNumber = ""
+                        triggerHaptic(if (viewModel.gameState.value is GameState.Won || viewModel.gameState.value is GameState.Lost) HapticFeedbackType.LongPress else HapticFeedbackType.TextHandleMove)
+                    }
+                }
+            )
+        }
+    }
+
     if (showExitConfirmation) {
-        AlertDialog(
+        ExitDialog(
+            showDialog = showExitConfirmation,
             onDismissRequest = { showExitConfirmation = false },
-            title = { Text("Exit Game?") },
-            text = { Text("Your progress will be lost. Are you sure you want to exit?") },
-            confirmButton = {
-                TextButton(onClick = {
-                    triggerStrongHaptic()
-                    showExitConfirmation = false
-                    navController.popBackStack()
-                    viewModel.restartGame()
-                }) {
-                    Text("Exit")
-                }
-            },
-            dismissButton = {
-                TextButton(onClick = { showExitConfirmation = false }) {
-                    Text("Cancel")
-                }
+            onConfirmExit = {
+                showExitConfirmation = false
+                navController.popBackStack()
+                viewModel.restartGame()
             }
         )
     }
