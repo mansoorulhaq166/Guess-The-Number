@@ -22,7 +22,7 @@ GuessMaster is a simple yet engaging number guessing game where players attempt 
 ## 📱 Screenshots
 | Home Screen | In-Game UI | Victory Screen |
 |------------|-----------|---------------|
-| ![Home](https://your-image-url.com/home.png) | ![Game](https://your-image-url.com/game.png) | ![Win](https://your-image-url.com/win.png) |
+| ![Home]([https://your-image-url.com/home.png](https://github.com/mansoorulhaq166/Guess-The-Number/blob/main/Screenshots/screenshot_1.png)) | ![Game]([https://your-image-url.com/game.png](https://github.com/mansoorulhaq166/Guess-The-Number/blob/main/Screenshots/screenshot_3.png)) | ![Win]([https://your-image-url.com/win.png](https://github.com/mansoorulhaq166/Guess-The-Number/blob/main/Screenshots/screenshot_5.png)) |
 
 ## 🚀 Getting Started
 ### Prerequisites
