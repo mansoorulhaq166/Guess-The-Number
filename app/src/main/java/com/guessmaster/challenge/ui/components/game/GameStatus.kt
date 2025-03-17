@@ -1,7 +1,11 @@
-package com.guessmaster.challenge.ui.components
+package com.guessmaster.challenge.ui.components.game
 
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -10,55 +14,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.guessmaster.challenge.domain.GameState
+import com.guessmaster.challenge.data.models.GameState
+import com.guessmaster.challenge.ui.screen.gamescreen.GameViewModel
 import com.guessmaster.challenge.ui.theme.montserrat
-import com.guessmaster.challenge.data.viewmodel.GameViewModel
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun DifficultyDropdown(
-    selectedDifficulty: String,
-    expanded: Boolean,
-    onExpandedChange: (Boolean) -> Unit,
-    onSelect: (String) -> Unit
-) {
-    Column(modifier = Modifier.fillMaxWidth().padding(vertical = 12.dp)) {
-        Text(
-            text = "Select Difficulty",
-            fontSize = 16.sp,
-            fontWeight = FontWeight.Bold,
-            fontFamily = montserrat,
-            color = Color.White,
-            modifier = Modifier.padding(bottom = 8.dp)
-        )
-        ExposedDropdownMenuBox(expanded = expanded, onExpandedChange = onExpandedChange) {
-            OutlinedTextField(
-                value = selectedDifficulty,
-                onValueChange = {},
-                readOnly = true,
-                textStyle = LocalTextStyle.current.copy(fontSize = 18.sp),
-                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
-                modifier = Modifier.fillMaxWidth().menuAnchor()
-            )
-            ExposedDropdownMenu(expanded = expanded, onDismissRequest = { onExpandedChange(false) }) {
-                listOf("Easy", "Medium", "Hard").forEach { difficulty ->
-                    DropdownMenuItem(
-                        text = {
-                            Text(
-                                difficulty,
-                                fontFamily = montserrat,
-                                color = Color.White,
-                                fontSize = 16.sp
-                            )
-                        },
-                        onClick = { onSelect(difficulty) },
-                        modifier = Modifier.padding(vertical = 4.dp)
-                    )
-                }
-            }
-        }
-    }
-}
 
 @Composable
 fun GameStatus(

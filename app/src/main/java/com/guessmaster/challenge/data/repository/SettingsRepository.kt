@@ -1,5 +1,6 @@
 package com.guessmaster.challenge.data.repository
 
+import android.util.Log
 import com.guessmaster.challenge.utils.DataStoreManager
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -10,18 +11,18 @@ class SettingsRepository @Inject constructor(
     private val dataStoreManager: DataStoreManager
 ) {
     val isSoundEnabled: Flow<Boolean> = dataStoreManager.isSoundEnabled
-        .catch { emit(true) } // Default to true on error
+        .catch { emit(true) }
         .map { it }
 
     val isHapticEnabled: Flow<Boolean> = dataStoreManager.isHapticEnabled
-        .catch { emit(true) } // Default to true on error
+        .catch { emit(true) }
         .map { it }
 
     suspend fun saveSoundEnabled(enabled: Boolean) {
         try {
             dataStoreManager.saveSoundEnabled(enabled)
         } catch (e: Exception) {
-            // Log error or handle appropriately
+            Log.d("TAG", "saveSoundEnabled: " + e.message)
         }
     }
 
@@ -29,7 +30,7 @@ class SettingsRepository @Inject constructor(
         try {
             dataStoreManager.saveHapticEnabled(enabled)
         } catch (e: Exception) {
-            // Log error or handle appropriately
+            Log.d("TAG", "saveHapticEnabled: " + e.message)
         }
     }
 } 

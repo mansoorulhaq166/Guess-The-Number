@@ -1,4 +1,4 @@
-package com.guessmaster.challenge.data.di
+package com.guessmaster.challenge
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

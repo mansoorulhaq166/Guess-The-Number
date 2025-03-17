@@ -1,19 +1,13 @@
-package com.guessmaster.challenge.ui.screen
+package com.guessmaster.challenge.ui.components.main
 
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -31,76 +25,11 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.guessmaster.challenge.R
 import com.guessmaster.challenge.ui.theme.bungee
-import com.guessmaster.challenge.ui.theme.luckiestGuy
-
-@Composable
-fun MainScreen(
-    onPlayGame: () -> Unit,
-    onSettings: () -> Unit,
-    onLeaderboard: () -> Unit
-) {
-    val showSettingsButton by remember { mutableStateOf(false) }
-
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-    ) {
-        // Background Image
-        Image(
-            painter = painterResource(id = R.drawable.main_bg),
-            contentDescription = "Background",
-            contentScale = ContentScale.Crop,
-            modifier = Modifier.matchParentSize()
-        )
-
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(
-                text = "Guess the \nNumber",
-                fontSize = 32.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.White,
-                textAlign = TextAlign.Center,
-                fontFamily = luckiestGuy
-            )
-            Spacer(modifier = Modifier.height(32.dp))
-
-            GradientButton(
-                text = "Play",
-                onClick = onPlayGame,
-                gradient = listOf(Color(0xFF4A90E2), Color(0xFF7B1FA2))
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            GradientButton(
-                text = "Settings",
-                onClick = onSettings,
-                gradient = listOf(Color(0xFFFFA726), Color(0xFFFF7043))
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            if (showSettingsButton) {
-                GradientButton(
-                    text = "Leaderboard",
-                    onClick = onLeaderboard,
-                    gradient = listOf(Color(0xFF42A5F5), Color(0xFF1E88E5))
-                )
-            }
-        }
-    }
-}
 
 @Composable
 fun GradientButton(

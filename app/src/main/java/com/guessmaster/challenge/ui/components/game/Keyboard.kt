@@ -1,4 +1,4 @@
-package com.guessmaster.challenge.ui.components
+package com.guessmaster.challenge.ui.components.game
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -14,8 +14,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.guessmaster.challenge.R
-import com.guessmaster.challenge.ui.theme.bungee
-import com.guessmaster.challenge.ui.theme.luckiestGuy
+import com.guessmaster.challenge.ui.theme.montserrat
 
 @Composable
 fun NumberEntry(
@@ -24,18 +23,18 @@ fun NumberEntry(
     onDelete: () -> Unit,
     onSubmit: () -> Unit
 ) {
-
-    val backgroundColor = Color(0xFF0B0D2E) // Main Screen Dark Background
-    val buttonBackground = Color(0xFF1A1C48) // Dark Blue Gray
-    val deleteBackground = Color(0xFFFF8000) // Soft Dark Red
-    val inputBackground = Color(0xFF14163A) // Slightly Lighter Deep Blue
+    val backgroundColor = Color(0xFF121212) // Deep Space Gray
+    val buttonBackground = Color(0xFF1E88E5) // Vibrant Blue
+    val deleteBackground = Color(0xFFD32F2F) // Elegant Red
+    val submitBackground = Color(0xFF43A047) // Soft Emerald Green
+    val inputBackground = Color(0xFF212121) // Muted Graphite
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxWidth()
             .background(backgroundColor)
-            .padding(top = 4.dp, start = 16.dp, end = 16.dp, bottom = 4.dp)
+            .padding(4.dp)
     ) {
         // Input field (non-editable)
         OutlinedTextField(
@@ -44,12 +43,19 @@ fun NumberEntry(
             readOnly = true,
             textStyle = androidx.compose.ui.text.TextStyle(
                 fontSize = 26.sp, textAlign = TextAlign.Center,
-                fontFamily = bungee
+                fontFamily = montserrat,
+                color = Color.White
+            ),
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = buttonBackground,
+                unfocusedBorderColor = Color.Gray,
+                focusedContainerColor = inputBackground,
+                unfocusedContainerColor = inputBackground
             ),
             modifier = Modifier
                 .fillMaxWidth()
-                .background(inputBackground, shape = MaterialTheme.shapes.medium)
-                .padding(bottom = 8.dp)
+                .clip(MaterialTheme.shapes.medium)
+                .padding(start = 10.dp, end = 10.dp, bottom = 8.dp)
         )
 
         val numberButtons = listOf(1, 2, 3, 4, 5, 6, 7, 8, 9)
@@ -63,17 +69,14 @@ fun NumberEntry(
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
                 i.forEach { number ->
-                    TextButton(
+                    Button(
                         onClick = { onNumberClick(number.toString()) },
                         modifier = Modifier
-                            .size(60.dp)
-                            .clip(CircleShape)
-                            .background(buttonBackground),
-                        colors = ButtonDefaults.textButtonColors(
-                            contentColor = Color.White
-                        )
+                            .size(56.dp)
+                            .clip(CircleShape),
+                        colors = ButtonDefaults.buttonColors(containerColor = buttonBackground)
                     ) {
-                        Text(text = number.toString(), fontSize = 22.sp, fontFamily = luckiestGuy)
+                        Text(text = number.toString(), fontSize = 20.sp, fontFamily = montserrat, color = Color.White)
                     }
                 }
             }
@@ -83,43 +86,44 @@ fun NumberEntry(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 12.dp),
+                .padding(top = 8.dp),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            TextButton(
+            Button(
                 onClick = { onNumberClick("0") },
                 modifier = Modifier
-                    .size(60.dp)
-                    .clip(CircleShape)
-                    .background(buttonBackground),
-                colors = ButtonDefaults.textButtonColors(
-                    contentColor = Color.White
-                )
+                    .size(56.dp)
+                    .clip(CircleShape),
+                colors = ButtonDefaults.buttonColors(containerColor = buttonBackground)
             ) {
-                Text(text = "0", fontSize = 22.sp, fontFamily = luckiestGuy)
+                Text(text = "0", fontSize = 20.sp, fontFamily = montserrat, color = Color.White)
             }
 
-            FilledIconButton(
+            IconButton(
                 onClick = onDelete,
-                colors = IconButtonDefaults.filledIconButtonColors(containerColor = deleteBackground),
-                modifier = Modifier.size(54.dp)
+                modifier = Modifier
+                    .size(54.dp)
+                    .clip(CircleShape)
+                    .background(deleteBackground)
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.baseline_backspace_24),
                     contentDescription = "Delete",
-                    tint = Color.Black
+                    tint = Color.White
                 )
             }
 
-            FilledIconButton(
+            IconButton(
                 onClick = onSubmit,
-                colors = IconButtonDefaults.filledIconButtonColors(containerColor = Color(0xFF7CFC00)), // Light green
-                modifier = Modifier.size(54.dp)
+                modifier = Modifier
+                    .size(54.dp)
+                    .clip(CircleShape)
+                    .background(submitBackground)
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.baseline_check_24),
                     contentDescription = "Submit",
-                    tint = Color.Black
+                    tint = Color.White
                 )
             }
         }

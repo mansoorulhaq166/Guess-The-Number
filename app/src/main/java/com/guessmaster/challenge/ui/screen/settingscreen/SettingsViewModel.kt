@@ -1,4 +1,4 @@
-package com.guessmaster.challenge.data.viewmodel
+package com.guessmaster.challenge.ui.screen.settingscreen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

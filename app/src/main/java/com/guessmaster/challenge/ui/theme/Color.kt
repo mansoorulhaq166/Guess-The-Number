@@ -33,6 +33,11 @@ val OnBackgroundColor = Color.Black
 val OnSurfaceColor = Color.Black
 val OnErrorColor = Color.White
 
+val PrimaryTextColor = Color(0xFFE0E0E0) // Light Gray
+val DropdownBackgroundColor = Color(0xFF2C2C2C) // Dark Gray
+val DropdownItemColor = Color(0xFF4CAF50) // Green
+val TextHighlightColor = Color(0xFFFFA726) // Orange
+
 val Purple80 = Color(0xFFD0BCFF)
 val PurpleGrey80 = Color(0xFFCCC2DC)
 val Pink80 = Color(0xFFEFB8C8)

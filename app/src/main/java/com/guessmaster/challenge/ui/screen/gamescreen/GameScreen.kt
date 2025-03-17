@@ -1,4 +1,4 @@
-package com.guessmaster.challenge.ui.screen
+package com.guessmaster.challenge.ui.screen.gamescreen
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
@@ -25,24 +25,22 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.guessmaster.challenge.R
-import com.guessmaster.challenge.domain.GameState
-import com.guessmaster.challenge.ui.components.DifficultyDropdown
-import com.guessmaster.challenge.ui.components.GameStatus
-import com.guessmaster.challenge.ui.components.GuessHistoryDialog
-import com.guessmaster.challenge.ui.components.HintDialog
-import com.guessmaster.challenge.ui.components.NumberEntry
-import com.guessmaster.challenge.ui.components.RestartButton
+import com.guessmaster.challenge.data.models.GameState
+import com.guessmaster.challenge.ui.components.game.GameStatus
+import com.guessmaster.challenge.ui.components.game.GuessHistoryDialog
+import com.guessmaster.challenge.ui.components.game.HintDialog
+import com.guessmaster.challenge.ui.components.game.NumberEntry
+import com.guessmaster.challenge.ui.components.game.RestartButton
+import com.guessmaster.challenge.ui.components.main.DifficultyDropdown
+import com.guessmaster.challenge.ui.screen.settingscreen.SettingsViewModel
 import com.guessmaster.challenge.ui.theme.montserrat
-import com.guessmaster.challenge.data.viewmodel.GameViewModel
-
-import androidx.compose.ui.hapticfeedback.HapticFeedbackType
-import androidx.compose.ui.platform.LocalHapticFeedback
-import com.guessmaster.challenge.data.viewmodel.SettingsViewModel
 
 @Composable
 fun GameScreen(
@@ -84,6 +82,15 @@ fun GameScreen(
             .fillMaxSize()
             .background(Color(0xFF0B0D2E))
     ) {
+        // Guess History Dialog
+        if (showGuessHistory) {
+            GuessHistoryDialog(viewModel.guessHistory) { showGuessHistory = false }
+        }
+
+        // Hint Dialog
+        if (showHintDialog) {
+            HintDialog(viewModel.requestHint()) { showHintDialog = false }
+        }
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -121,6 +128,21 @@ fun GameScreen(
             // Display Game Status (Attempts, Messages, Win/Loss)
             GameStatus(gameState, viewModel, maxNumber, selectedDifficulty)
 
+            // Restart Button (Only visible after a win or loss)
+            if (gameState is GameState.Won || gameState is GameState.Lost) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize(), // Takes full space
+                    contentAlignment = Alignment.Center // Centers content
+                ) {
+                    RestartButton {
+                        triggerStrongHaptic()
+                        viewModel.restartGame()
+                        enteredNumber = ""
+                    }
+                }
+            }
+
             // Hint & History Icons
             if (gameState is GameState.InProgress) {
                 Row(
@@ -135,7 +157,8 @@ fun GameScreen(
                             .clickable {
                                 triggerLightHaptic()
                                 showHintDialog = true
-                            }
+                            },
+                        tint = Color.White
                     )
 
                     Icon(
@@ -146,27 +169,9 @@ fun GameScreen(
                             .clickable {
                                 triggerLightHaptic()
                                 showGuessHistory = true
-                            }
+                            },
+                        tint = Color.White
                     )
-                }
-
-                // Guess History Dialog
-                if (showGuessHistory) {
-                    GuessHistoryDialog(viewModel.guessHistory) { showGuessHistory = false }
-                }
-
-                // Hint Dialog
-                if (showHintDialog) {
-                    HintDialog(viewModel.requestHint()) { showHintDialog = false }
-                }
-            }
-
-            // Restart Button (Only visible after a win or loss)
-            if (gameState is GameState.Won || gameState is GameState.Lost) {
-                RestartButton {
-                    triggerStrongHaptic()
-                    viewModel.restartGame()
-                    enteredNumber = ""
                 }
             }
         }

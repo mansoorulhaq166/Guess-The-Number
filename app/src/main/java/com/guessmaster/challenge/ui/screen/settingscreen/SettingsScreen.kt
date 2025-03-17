@@ -1,4 +1,4 @@
-package com.guessmaster.challenge.ui.screen
+package com.guessmaster.challenge.ui.screen.settingscreen
 
 import android.content.Intent
 import androidx.compose.foundation.Image
@@ -38,7 +38,6 @@ import com.guessmaster.challenge.R
 import com.guessmaster.challenge.ui.components.settings.SettingOption
 import com.guessmaster.challenge.ui.components.settings.SettingToggle
 import com.guessmaster.challenge.ui.theme.montserrat
-import com.guessmaster.challenge.data.viewmodel.SettingsViewModel
 
 @Composable
 fun SettingsScreen(navController: NavController, viewModel: SettingsViewModel = hiltViewModel()) {
