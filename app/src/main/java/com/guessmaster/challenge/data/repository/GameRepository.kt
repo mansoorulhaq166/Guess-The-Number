@@ -4,19 +4,12 @@ import javax.inject.Inject
 import kotlin.math.abs
 
 class GameRepository @Inject constructor() {
-    private var maxAttempts: Int = 10
     private var numberRange: IntRange = 1..100
     private var secretNumber: Int = generateSecretNumber()
     private var attempts = 0
     private var closestGuess: Int? = null
 
     private fun generateSecretNumber(): Int = numberRange.random()
-
-    fun updateGameSettings(maxAttempts: Int, numberRange: IntRange) {
-        this.maxAttempts = maxAttempts
-        this.numberRange = numberRange
-        resetGame()
-    }
 
     fun resetGame() {
         attempts = 0

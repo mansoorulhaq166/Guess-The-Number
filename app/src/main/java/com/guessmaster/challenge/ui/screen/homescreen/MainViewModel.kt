@@ -23,6 +23,10 @@ class MainViewModel @Inject constructor() : ViewModel() {
         navController.navigate("game")
     }
 
+    fun onPlayGameByLevels(navController: NavController) {
+        navController.navigate("gameByLevels")
+    }
+
     fun onSettings(navController: NavController) {
         navController.navigate("settings")
     }

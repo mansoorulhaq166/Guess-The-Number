@@ -26,7 +26,6 @@ fun MainScreen(navController: NavController, viewModel: MainViewModel = hiltView
     val showLeaderboardButton by viewModel.showLeaderboardButton.collectAsState()
 
     Box(modifier = Modifier.fillMaxSize()) {
-        // Background Image
         Image(
             painter = painterResource(id = R.drawable.main_bg),
             contentDescription = "Background",
@@ -54,6 +53,13 @@ fun MainScreen(navController: NavController, viewModel: MainViewModel = hiltView
             GradientButton(
                 text = "Play",
                 onClick = { viewModel.onPlayGame(navController) },
+                gradient = listOf(Color(0xFF4A90E2), Color(0xFF7B1FA2))
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+
+            GradientButton(
+                text = "Play Level 1",
+                onClick = { viewModel.onPlayGameByLevels(navController) },
                 gradient = listOf(Color(0xFF4A90E2), Color(0xFF7B1FA2))
             )
             Spacer(modifier = Modifier.height(16.dp))

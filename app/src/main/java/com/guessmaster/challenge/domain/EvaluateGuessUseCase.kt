@@ -29,6 +29,27 @@ class EvaluateGuessUseCase @Inject constructor(
         }
     }
 
+//    fun executeLevel(guess: Int): GameLevelState {
+//        gameRepository.incrementAttempts()
+//        val attempts = gameRepository.getAttempts()
+//        val secretNumber = gameRepository.getSecretNumber()
+//        val diff = abs(guess - secretNumber)
+//
+//        gameRepository.updateClosestGuess(guess)
+//
+//        return when {
+//            guess == secretNumber -> {
+//                gameRepository.resetGame()
+//                GameLevelState.Won(attempts)
+//            }
+//            attempts >= 10 -> {
+//                gameRepository.resetGame()
+//                GameLevelState.Lost(attempts, secretNumber)
+//            }
+//            else -> GameLevelState.InProgress(attempts, generateHintMessage(guess, diff))
+//        }
+//    }
+
     private fun generateHintMessage(guess: Int, diff: Int): String {
         val baseMessage = if (guess < gameRepository.getSecretNumber()) "Too low!" else "Too high!"
 
