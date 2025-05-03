@@ -1,3 +1,112 @@
 <resources>
     <string name="app_name">Guess Master</string>
+
+    <!-- Main Screen -->
+    <string name="background_image_desc">Background Image</string>
+    <string name="game_title">Guess the \nNumber</string>
+    <string name="quick_play">Quick Play</string>
+    <string name="level_challenge">Level Challenge</string>
+    <string name="game_settings">Game Settings</string>
+    <string name="leaderboard">Leaderboard</string>
+
+    <!-- Game Screens -->
+    <string name="guess_the_number_title">Guess The Number!</string>
+    <string name="number_placeholder">?</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_submit">Submit</string>
+
+    <!-- Game State Messages -->
+    <string name="game_not_started">Start guessing a number between 1 and %1$d</string>
+    <string name="game_attempts">Attempts: %1$d / %2$d</string>
+    <string name="game_remaining">Remaining: %1$d</string>
+    <string name="game_won">🎉 Congrats! You guessed it in %1$d attempts!</string>
+    <string name="game_lost">❌ Game Over! The number was %1$d.</string>
+
+    <!-- Hint Messages -->
+    <string name="hint_too_low">Too low!</string>
+    <string name="hint_too_high">Too high!</string>
+    <string name="hint_ice_cold">❄️ Ice cold! You\'re way off! Consider a major adjustment.</string>
+    <string name="hint_far">You\'re far from the target. Try shifting significantly.</string>
+    <string name="hint_closer">Getting closer! Adjust by about 10.</string>
+    <string name="hint_very_close">🔥 Very close! Fine-tune your guess.</string>
+    <string name="hint_almost_there">🔥 Almost there!</string>
+    <string name="no_more_hints">No more hints available!</string>
+    <string name="start_game_first">Start the game first!</string>
+
+    <!-- Number Properties Hints -->
+    <string name="provide_hint_even_odd">The number is %s.</string>
+    <string name="provide_hint_even">even</string>
+    <string name="provide_hint_odd">odd</string>
+    <string name="provide_hint_multiple">It is %s.</string>
+    <string name="provide_hint_multiple_10">a multiple of 10</string>
+    <string name="provide_hint_multiple_5">a multiple of 5</string>
+    <string name="provide_hint_multiple_3">a multiple of 3</string>
+    <string name="provide_hint_not_multiple">not a multiple of 3, 5, or 10</string>
+    <string name="provide_hint_range">It falls in the range %s.</string>
+    <string name="provide_hint_range_1_50">between 1 and 50</string>
+    <string name="provide_hint_range_51_100">between 51 and 100</string>
+    <string name="provide_hint_range_101_150">between 101 and 150</string>
+    <string name="provide_hint_range_151_200">between 151 and 200</string>
+    <string name="provide_hint_digits">The first digit is %1$s, and the last digit is %2$s.</string>
+
+    <!-- Difficulty Levels -->
+    <string name="select_difficulty_label">Select Difficulty</string>
+    <string name="difficulty_easy">Easy</string>
+    <string name="difficulty_medium">Medium</string>
+    <string name="difficulty_hard">Hard</string>
+
+    <!-- Level Challenge -->
+    <string name="level_indicator">Level: %1$d/%2$d</string>
+    <string name="level_start_message">Level %1$d: Guess between 1 and %2$d</string>
+    <string name="attempts_indicator">Attempts: %d</string>
+    <string name="attempts_status">Attempts: %1$d / %2$d</string>
+    <string name="remaining_attempts">Remaining: %d</string>
+    <string name="level_complete_description">Level Complete</string>
+    <string name="level_complete_message">🎉 Level %d Complete!</string>
+    <string name="guessed_in_attempts">Guessed in %d attempts</string>
+    <string name="level_failed_description">Level Failed</string>
+    <string name="level_failed_message">❌ Level %d Failed</string>
+    <string name="secret_number_reveal">The number was %d</string>
+    <string name="next_level_button">Next</string>
+    <string name="next_level_description">Next level</string>
+    <string name="retry_level_button">Retry Level</string>
+    <string name="retry_level_description">Retry level</string>
+    <string name="new_game_button">New Game</string>
+
+    <!-- Game Actions -->
+    <string name="hint_button">Hint</string>
+    <string name="hint_description">Get hint</string>
+    <string name="hint_icon_description">Hint</string>
+    <string name="hint_dialog_title">Hint</string>
+    <string name="history_button">History</string>
+    <string name="history_description">View history</string>
+    <string name="history_icon_description">Guess History</string>
+    <string name="guess_history_title">Guess History</string>
+    <string name="guess_item_format">Guess: %d</string>
+    <string name="restart_button_description">Restart</string>
+    <string name="restart_button_text">Restart Game</string>
+
+    <!-- Dialogs -->
+    <string name="exit_dialog_title">Exit Game?</string>
+    <string name="exit_dialog_description">Your progress will be lost. Are you sure you want to exit?</string>
+    <string name="exit_dialog_cancel">Cancel</string>
+    <string name="exit_dialog_exit">Exit</string>
+    <string name="close_button_description">Close</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="back_button_description">Back</string>
+    <string name="background_image_description">Background</string>
+    <string name="sound_effects_label">Sound Effects</string>
+    <string name="haptic_feedback_label">Haptic Feedback</string>
+    <string name="change_language_label">Change Language</string>
+    <string name="rate_app_label">Rate this App</string>
+    <string name="share_app_label">Share this App</string>
+    <string name="share_app_message">Check out this amazing game: https://play.google.com/store/apps/details?id=com.guessmaster.challenge</string>
+    <string name="share_via">Share via</string>
+
+    <!-- Language Selection -->
+    <string name="choose_language">Choose Your Language</string>
+    <string name="select_language_hint">Select your preferred language to continue</string>
+    <string name="button_continue">Continue</string>
 </resources>

@@ -31,7 +31,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -39,21 +38,15 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import com.guessmaster.challenge.R
 import com.guessmaster.challenge.ui.theme.montserrat
-
-@Preview
-@Composable
-fun ShowDialogPreview() {
-    val guessHistory = listOf(1234, 5678, 9012)
-    GuessHistoryDialog(guessHistory) { }
-}
 
 @Composable
 fun GuessHistoryDialog(
@@ -61,21 +54,18 @@ fun GuessHistoryDialog(
     onDismiss: () -> Unit
 ) {
     var isVisible by remember { mutableStateOf(true) }
-    val coroutineScope = rememberCoroutineScope()
 
-    // Simplified animation - reduced spring stiffness values
     val dialogScale by animateFloatAsState(
         targetValue = if (isVisible) 1f else 0.85f,
         animationSpec = spring(
             dampingRatio = Spring.DampingRatioMediumBouncy,
-            stiffness = Spring.StiffnessVeryLow // Reduced stiffness for smoother animation
+            stiffness = Spring.StiffnessVeryLow
         ),
         label = "dialogScale"
     )
 
     fun dismissDialog() {
         isVisible = false
-        // Remove delay to improve responsiveness
         onDismiss()
     }
 
@@ -90,13 +80,11 @@ fun GuessHistoryDialog(
                 .clickable(onClick = { dismissDialog() }),
             contentAlignment = Alignment.Center
         ) {
-            // Main dialog card with simplified effects
             Card(
                 modifier = Modifier
                     .fillMaxWidth(0.9f)
                     .clickable(onClick = {}, enabled = false)
                     .scale(dialogScale)
-                    // Single shadow instead of multiple nested shadows
                     .shadow(
                         elevation = 16.dp,
                         shape = RoundedCornerShape(24.dp)
@@ -108,7 +96,6 @@ fun GuessHistoryDialog(
                     modifier = Modifier.padding(20.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    // Simplified close button
                     Box(
                         modifier = Modifier
                             .size(40.dp)
@@ -120,13 +107,12 @@ fun GuessHistoryDialog(
                     ) {
                         Icon(
                             imageVector = Icons.Rounded.Close,
-                            contentDescription = "Close",
+                            contentDescription = stringResource(R.string.close_button_description),
                             tint = Color.White,
                             modifier = Modifier.size(24.dp)
                         )
                     }
 
-                    // Simplified header
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -148,7 +134,7 @@ fun GuessHistoryDialog(
                                 modifier = Modifier.padding(end = 8.dp)
                             )
                             Text(
-                                text = "Guess History",
+                                text = stringResource(R.string.guess_history_title),
                                 fontSize = 22.sp,
                                 fontWeight = FontWeight.Bold,
                                 color = Color.White,
@@ -157,7 +143,6 @@ fun GuessHistoryDialog(
                         }
                     }
 
-                    // Content Area with simplified styling
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -167,14 +152,12 @@ fun GuessHistoryDialog(
                                 shape = RoundedCornerShape(16.dp)
                             )
                     ) {
-                        // More efficient list with simplified items
                         LazyColumn(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(16.dp)
                         ) {
                             itemsIndexed(guessHistory) { index, guess ->
-                                // Simplified item styling
                                 Row(
                                     modifier = Modifier
                                         .fillMaxWidth()
@@ -186,7 +169,6 @@ fun GuessHistoryDialog(
                                         .padding(12.dp),
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
-                                    // Number indicator with simplified styling
                                     Box(
                                         modifier = Modifier
                                             .size(36.dp)
@@ -207,9 +189,8 @@ fun GuessHistoryDialog(
 
                                     Spacer(modifier = Modifier.width(12.dp))
 
-                                    // Guess value
                                     Text(
-                                        text = "Guess: $guess",
+                                        text = stringResource(R.string.guess_item_format, guess),
                                         fontSize = 18.sp,
                                         color = Color(0xFF00E676),
                                         fontWeight = FontWeight.Medium,
@@ -222,7 +203,6 @@ fun GuessHistoryDialog(
 
                     Spacer(modifier = Modifier.height(16.dp))
 
-                    // Simplified footer
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()

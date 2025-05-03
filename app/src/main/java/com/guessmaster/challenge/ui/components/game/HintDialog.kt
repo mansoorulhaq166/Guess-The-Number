@@ -37,12 +37,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import com.guessmaster.challenge.R
 import com.guessmaster.challenge.ui.theme.montserrat
 
 @Composable
@@ -124,7 +126,7 @@ fun HintDialog(hint: String, onDismiss: () -> Unit) {
                         ) {
                             Icon(
                                 imageVector = Icons.Rounded.Close,
-                                contentDescription = "Close",
+                                contentDescription = stringResource(R.string.close_button_description),
                                 tint = Color.White,
                                 modifier = Modifier.size(20.dp)
                             )
@@ -150,7 +152,7 @@ fun HintDialog(hint: String, onDismiss: () -> Unit) {
                             ) {
                                 Icon(
                                     imageVector = Icons.Rounded.Info,
-                                    contentDescription = "Hint",
+                                    contentDescription = stringResource(R.string.hint_icon_description),
                                     tint = Color.White,
                                     modifier = Modifier.size(24.dp)
                                 )
@@ -160,7 +162,7 @@ fun HintDialog(hint: String, onDismiss: () -> Unit) {
 
                             // Title
                             Text(
-                                text = "Hint",
+                                text = stringResource(R.string.hint_dialog_title),
                                 fontSize = 22.sp,
                                 fontWeight = FontWeight.Bold,
                                 color = Color(0xFFFFB300),

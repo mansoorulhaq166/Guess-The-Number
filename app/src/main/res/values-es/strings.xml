@@ -1,0 +1,112 @@
+<resources>
+    <string name="app_name">Adivina Maestro</string>
+
+    <!-- Main Screen -->
+    <string name="background_image_desc">Imagen de fondo</string>
+    <string name="game_title">Adivina el\nNúmero</string>
+    <string name="quick_play">Juego Rápido</string>
+    <string name="level_challenge">Desafío por Niveles</string>
+    <string name="game_settings">Configuración</string>
+    <string name="leaderboard">Tabla de Posiciones</string>
+
+    <!-- Game Screens -->
+    <string name="guess_the_number_title">¡Adivina el Número!</string>
+    <string name="number_placeholder">?</string>
+    <string name="action_delete">Borrar</string>
+    <string name="action_submit">Enviar</string>
+
+    <!-- Game State Messages -->
+    <string name="game_not_started">Comienza adivinando un número entre 1 y %1$d</string>
+    <string name="game_attempts">Intentos: %1$d / %2$d</string>
+    <string name="game_remaining">Restantes: %1$d</string>
+    <string name="game_won">🎉 ¡Felicitaciones! ¡Lo adivinaste en %1$d intentos!</string>
+    <string name="game_lost">❌ ¡Juego terminado! El número era %1$d.</string>
+
+    <!-- Hint Messages -->
+    <string name="hint_too_low">¡Muy bajo!</string>
+    <string name="hint_too_high">¡Muy alto!</string>
+    <string name="hint_ice_cold">❄️ ¡Congelado! Estás muy lejos. Considera un ajuste mayor.</string>
+    <string name="hint_far">Estás lejos del objetivo. Intenta un cambio significativo.</string>
+    <string name="hint_closer">¡Más cerca! Ajusta unos 10 puntos.</string>
+    <string name="hint_very_close">🔥 ¡Muy cerca! Afina tu suposición.</string>
+    <string name="hint_almost_there">🔥 ¡Casi lo tienes!</string>
+    <string name="no_more_hints">¡No hay más pistas disponibles!</string>
+    <string name="start_game_first">¡Primero inicia el juego!</string>
+
+    <!-- Number Properties Hints -->
+    <string name="provide_hint_even_odd">El número es %s.</string>
+    <string name="provide_hint_even">par</string>
+    <string name="provide_hint_odd">impar</string>
+    <string name="provide_hint_multiple">Es %s.</string>
+    <string name="provide_hint_multiple_10">múltiplo de 10</string>
+    <string name="provide_hint_multiple_5">múltiplo de 5</string>
+    <string name="provide_hint_multiple_3">múltiplo de 3</string>
+    <string name="provide_hint_not_multiple">no es múltiplo de 3, 5 o 10</string>
+    <string name="provide_hint_range">Está en el rango %s.</string>
+    <string name="provide_hint_range_1_50">entre 1 y 50</string>
+    <string name="provide_hint_range_51_100">entre 51 y 100</string>
+    <string name="provide_hint_range_101_150">entre 101 y 150</string>
+    <string name="provide_hint_range_151_200">entre 151 y 200</string>
+    <string name="provide_hint_digits">El primer dígito es %1$s y el último es %2$s.</string>
+
+    <!-- Difficulty Levels -->
+    <string name="select_difficulty_label">Selecciona Dificultad</string>
+    <string name="difficulty_easy">Fácil</string>
+    <string name="difficulty_medium">Medio</string>
+    <string name="difficulty_hard">Difícil</string>
+
+    <!-- Level Challenge -->
+    <string name="level_indicator">Nivel: %1$d/%2$d</string>
+    <string name="level_start_message">Nivel %1$d: Adivina entre 1 y %2$d</string>
+    <string name="attempts_indicator">Intentos: %d</string>
+    <string name="attempts_status">Intentos: %1$d / %2$d</string>
+    <string name="remaining_attempts">Restantes: %d</string>
+    <string name="level_complete_description">Nivel Completado</string>
+    <string name="level_complete_message">🎉 ¡Nivel %d Completado!</string>
+    <string name="guessed_in_attempts">Adivinado en %d intentos</string>
+    <string name="level_failed_description">Nivel Fallido</string>
+    <string name="level_failed_message">❌ Nivel %d Fallido</string>
+    <string name="secret_number_reveal">El número era %d</string>
+    <string name="next_level_button">Siguiente</string>
+    <string name="next_level_description">Siguiente nivel</string>
+    <string name="retry_level_button">Reintentar Nivel</string>
+    <string name="retry_level_description">Reintentar nivel</string>
+    <string name="new_game_button">Nuevo Juego</string>
+
+    <!-- Game Actions -->
+    <string name="hint_button">Pista</string>
+    <string name="hint_description">Obtener pista</string>
+    <string name="hint_icon_description">Pista</string>
+    <string name="hint_dialog_title">Pista</string>
+    <string name="history_button">Historial</string>
+    <string name="history_description">Ver historial</string>
+    <string name="history_icon_description">Historial de intentos</string>
+    <string name="guess_history_title">Historial de Intentos</string>
+    <string name="guess_item_format">Intento: %d</string>
+    <string name="restart_button_description">Reiniciar</string>
+    <string name="restart_button_text">Reiniciar Juego</string>
+
+    <!-- Dialogs -->
+    <string name="exit_dialog_title">¿Salir del juego?</string>
+    <string name="exit_dialog_description">Tu progreso se perderá. ¿Seguro que quieres salir?</string>
+    <string name="exit_dialog_cancel">Cancelar</string>
+    <string name="exit_dialog_exit">Salir</string>
+    <string name="close_button_description">Cerrar</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Configuración</string>
+    <string name="back_button_description">Atrás</string>
+    <string name="background_image_description">Fondo</string>
+    <string name="sound_effects_label">Efectos de sonido</string>
+    <string name="haptic_feedback_label">Retroalimentación háptica</string>
+    <string name="change_language_label">Cambiar idioma</string>
+    <string name="rate_app_label">Calificar esta app</string>
+    <string name="share_app_label">Compartir esta app</string>
+    <string name="share_app_message">Mira este increíble juego: https://play.google.com/store/apps/details?id=com.guessmaster.challenge</string>
+    <string name="share_via">Compartir mediante</string>
+
+    <!-- Language Selection -->
+    <string name="choose_language">Elige tu idioma</string>
+    <string name="select_language_hint">Selecciona tu idioma preferido para continuar</string>
+    <string name="button_continue">Continuar</string>
+</resources>

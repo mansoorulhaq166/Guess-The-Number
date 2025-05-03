@@ -1,8 +1,9 @@
 package com.guessmaster.challenge.ui.screen.levelscreen
 
-import androidx.compose.runtime.mutableStateListOf
+import android.content.res.Resources
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.guessmaster.challenge.R
 import com.guessmaster.challenge.data.models.GameState
 import com.guessmaster.challenge.data.repository.SettingsRepository
 import com.guessmaster.challenge.domain.EvaluateGuessUseCase
@@ -19,6 +20,7 @@ import javax.inject.Inject
 class LevelsViewModel @Inject constructor(
     private val evaluateGuessUseCase: EvaluateGuessUseCase,
     private val provideHintUseCase: ProvideHintUseCase,
+    private val resources: Resources,
     settingsRepository: SettingsRepository
 ) : ViewModel() {
 
@@ -28,7 +30,9 @@ class LevelsViewModel @Inject constructor(
     private val _maxLevel = MutableStateFlow(10)
     val maxLevel: StateFlow<Int> = _maxLevel.asStateFlow()
 
-    val guessHistory = mutableStateListOf<Int>()
+    private val _guessHistory = MutableStateFlow<List<Int>>(emptyList())
+    val guessHistory: StateFlow<List<Int>> = _guessHistory.asStateFlow()
+
     private var hintCount = 2
 
     private val _gameState = MutableStateFlow<GameState>(GameState.NotStarted)
@@ -60,7 +64,7 @@ class LevelsViewModel @Inject constructor(
     }
 
     fun submitGuess(guess: Int) {
-        guessHistory.add(guess)
+        _guessHistory.value = _guessHistory.value + guess
         _gameState.value = evaluateGuessUseCase.execute(guess)
 
         // If game is won, check if we should advance to next level
@@ -72,11 +76,11 @@ class LevelsViewModel @Inject constructor(
     }
 
     fun requestHint(): String {
-        if (hintCount <= 0) return "No more hints available!"
+        if (hintCount <= 0) return resources.getString(R.string.no_more_hints)
 
         val currentState = gameState.value
         if (currentState !is GameState.InProgress) {
-            return "Start the game first!"
+            return resources.getString(R.string.start_game_first)
         }
 
         hintCount--
@@ -110,7 +114,7 @@ class LevelsViewModel @Inject constructor(
     }
 
     private fun resetGame() {
-        guessHistory.clear()
+        _guessHistory.value = emptyList()
         hintCount = 2
         _gameState.value = GameState.NotStarted
     }

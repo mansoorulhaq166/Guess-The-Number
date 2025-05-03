@@ -1,0 +1,112 @@
+<resources>
+    <string name="app_name">Zahlen-Ratespiel</string>
+
+    <!-- Hauptbildschirm -->
+    <string name="background_image_desc">Hintergrundbild</string>
+    <string name="game_title">Errate\ndie Zahl</string>
+    <string name="quick_play">Schnellspiel</string>
+    <string name="level_challenge">Level-Herausforderung</string>
+    <string name="game_settings">Einstellungen</string>
+    <string name="leaderboard">Bestenliste</string>
+
+    <!-- Spielbildschirme -->
+    <string name="guess_the_number_title">Errate die Zahl!</string>
+    <string name="number_placeholder">?</string>
+    <string name="action_delete">Löschen</string>
+    <string name="action_submit">Bestätigen</string>
+
+    <!-- Spielstatusmeldungen -->
+    <string name="game_not_started">Rate eine Zahl zwischen 1 und %1$d</string>
+    <string name="game_attempts">Versuche: %1$d / %2$d</string>
+    <string name="game_remaining">Verbleibend: %1$d</string>
+    <string name="game_won">🎉 Glückwunsch! Du hast es in %1$d Versuchen geschafft!</string>
+    <string name="game_lost">❌ Spiel vorbei! Die Zahl war %1$d.</string>
+
+    <!-- Hinweismeldungen -->
+    <string name="hint_too_low">Zu niedrig!</string>
+    <string name="hint_too_high">Zu hoch!</string>
+    <string name="hint_ice_cold">❄️ Eiskalt! Du bist weit daneben. Große Anpassung nötig.</string>
+    <string name="hint_far">Du bist weit vom Ziel entfernt. Versuche eine größere Änderung.</string>
+    <string name="hint_closer">Schon näher! Ändere um etwa 10.</string>
+    <string name="hint_very_close">🔥 Sehr nah! Feine Anpassung nötig.</string>
+    <string name="hint_almost_there">🔥 Fast geschafft!</string>
+    <string name="no_more_hints">Keine Hinweise mehr verfügbar!</string>
+    <string name="start_game_first">Starte zuerst das Spiel!</string>
+
+    <!-- Zahleneigenschaften-Hinweise -->
+    <string name="provide_hint_even_odd">Die Zahl ist %s.</string>
+    <string name="provide_hint_even">gerade</string>
+    <string name="provide_hint_odd">ungerade</string>
+    <string name="provide_hint_multiple">Sie ist %s.</string>
+    <string name="provide_hint_multiple_10">ein Vielfaches von 10</string>
+    <string name="provide_hint_multiple_5">ein Vielfaches von 5</string>
+    <string name="provide_hint_multiple_3">ein Vielfaches von 3</string>
+    <string name="provide_hint_not_multiple">kein Vielfaches von 3, 5 oder 10</string>
+    <string name="provide_hint_range">Sie liegt im Bereich %s.</string>
+    <string name="provide_hint_range_1_50">zwischen 1 und 50</string>
+    <string name="provide_hint_range_51_100">zwischen 51 und 100</string>
+    <string name="provide_hint_range_101_150">zwischen 101 und 150</string>
+    <string name="provide_hint_range_151_200">zwischen 151 und 200</string>
+    <string name="provide_hint_digits">Die erste Ziffer ist %1$s und die letzte ist %2$s.</string>
+
+    <!-- Schwierigkeitsgrade -->
+    <string name="select_difficulty_label">Schwierigkeit wählen</string>
+    <string name="difficulty_easy">Einfach</string>
+    <string name="difficulty_medium">Mittel</string>
+    <string name="difficulty_hard">Schwer</string>
+
+    <!-- Level-Herausforderung -->
+    <string name="level_indicator">Level: %1$d/%2$d</string>
+    <string name="level_start_message">Level %1$d: Rate zwischen 1 und %2$d</string>
+    <string name="attempts_indicator">Versuche: %d</string>
+    <string name="attempts_status">Versuche: %1$d / %2$d</string>
+    <string name="remaining_attempts">Verbleibend: %d</string>
+    <string name="level_complete_description">Level abgeschlossen</string>
+    <string name="level_complete_message">🎉 Level %d abgeschlossen!</string>
+    <string name="guessed_in_attempts">Erraten in %d Versuchen</string>
+    <string name="level_failed_description">Level gescheitert</string>
+    <string name="level_failed_message">❌ Level %d gescheitert</string>
+    <string name="secret_number_reveal">Die Zahl war %d</string>
+    <string name="next_level_button">Weiter</string>
+    <string name="next_level_description">Nächstes Level</string>
+    <string name="retry_level_button">Level wiederholen</string>
+    <string name="retry_level_description">Level wiederholen</string>
+    <string name="new_game_button">Neues Spiel</string>
+
+    <!-- Spielaktionen -->
+    <string name="hint_button">Hinweis</string>
+    <string name="hint_description">Hinweis anzeigen</string>
+    <string name="hint_icon_description">Hinweis</string>
+    <string name="hint_dialog_title">Hinweis</string>
+    <string name="history_button">Verlauf</string>
+    <string name="history_description">Verlauf anzeigen</string>
+    <string name="history_icon_description">Ratespiel-Verlauf</string>
+    <string name="guess_history_title">Ratespiel-Verlauf</string>
+    <string name="guess_item_format">Versuch: %d</string>
+    <string name="restart_button_description">Neustart</string>
+    <string name="restart_button_text">Spiel neustarten</string>
+
+    <!-- Dialoge -->
+    <string name="exit_dialog_title">Spiel verlassen?</string>
+    <string name="exit_dialog_description">Dein Fortschritt geht verloren. Wirklich verlassen?</string>
+    <string name="exit_dialog_cancel">Abbrechen</string>
+    <string name="exit_dialog_exit">Verlassen</string>
+    <string name="close_button_description">Schließen</string>
+
+    <!-- Einstellungen -->
+    <string name="settings_title">Einstellungen</string>
+    <string name="back_button_description">Zurück</string>
+    <string name="background_image_description">Hintergrund</string>
+    <string name="sound_effects_label">Soundeffekte</string>
+    <string name="haptic_feedback_label">Vibration</string>
+    <string name="change_language_label">Sprache ändern</string>
+    <string name="rate_app_label">App bewerten</string>
+    <string name="share_app_label">App teilen</string>
+    <string name="share_app_message">Schau dir dieses tolle Spiel an: https://play.google.com/store/apps/details?id=com.guessmaster.challenge</string>
+    <string name="share_via">Teilen via</string>
+
+    <!-- Sprachauswahl -->
+    <string name="choose_language">Sprache wählen</string>
+    <string name="select_language_hint">Wähle deine bevorzugte Sprache</string>
+    <string name="button_continue">Weiter</string>
+</resources>

@@ -1,12 +1,15 @@
 package com.guessmaster.challenge.domain
 
+import android.content.Context
+import com.guessmaster.challenge.R
 import com.guessmaster.challenge.data.models.GameState
 import com.guessmaster.challenge.data.repository.GameRepository
 import javax.inject.Inject
 import kotlin.math.abs
 
 class EvaluateGuessUseCase @Inject constructor(
-    private val gameRepository: GameRepository
+    private val gameRepository: GameRepository,
+    private val context: Context
 ) {
     fun execute(guess: Int): GameState {
         gameRepository.incrementAttempts()
@@ -29,36 +32,18 @@ class EvaluateGuessUseCase @Inject constructor(
         }
     }
 
-//    fun executeLevel(guess: Int): GameLevelState {
-//        gameRepository.incrementAttempts()
-//        val attempts = gameRepository.getAttempts()
-//        val secretNumber = gameRepository.getSecretNumber()
-//        val diff = abs(guess - secretNumber)
-//
-//        gameRepository.updateClosestGuess(guess)
-//
-//        return when {
-//            guess == secretNumber -> {
-//                gameRepository.resetGame()
-//                GameLevelState.Won(attempts)
-//            }
-//            attempts >= 10 -> {
-//                gameRepository.resetGame()
-//                GameLevelState.Lost(attempts, secretNumber)
-//            }
-//            else -> GameLevelState.InProgress(attempts, generateHintMessage(guess, diff))
-//        }
-//    }
-
     private fun generateHintMessage(guess: Int, diff: Int): String {
-        val baseMessage = if (guess < gameRepository.getSecretNumber()) "Too low!" else "Too high!"
+        val baseMessage = if (guess < gameRepository.getSecretNumber())
+            context.getString(R.string.hint_too_low)
+        else
+            context.getString(R.string.hint_too_high)
 
         return when {
-            diff > 30 -> "$baseMessage ❄️ Ice cold! You're way off! Consider a major adjustment."
-            diff in 21..30 -> "$baseMessage You're far from the target. Try shifting significantly."
-            diff in 11..20 -> "$baseMessage Getting closer! Adjust by about 10."
-            diff in 6..10 -> "$baseMessage 🔥 Very close! Fine-tune your guess."
-            else -> "$baseMessage 🔥 Almost there!"
+            diff > 30 -> "$baseMessage ${context.getString(R.string.hint_ice_cold)}"
+            diff in 21..30 -> "$baseMessage ${context.getString(R.string.hint_far)}"
+            diff in 11..20 -> "$baseMessage ${context.getString(R.string.hint_closer)}"
+            diff in 6..10 -> "$baseMessage ${context.getString(R.string.hint_very_close)}"
+            else -> "$baseMessage ${context.getString(R.string.hint_almost_there)}"
         }
     }
 }

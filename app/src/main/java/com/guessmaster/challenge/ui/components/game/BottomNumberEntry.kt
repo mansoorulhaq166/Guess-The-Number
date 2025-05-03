@@ -14,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.guessmaster.challenge.R
 import com.guessmaster.challenge.data.models.GameState
@@ -43,15 +44,22 @@ fun BottomNumberEntry(
     }
 }
 
-
 @Composable
 fun GameActions(onHintClick: () -> Unit, onHistoryClick: () -> Unit) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
-        ActionIcon(R.drawable.baseline_hint, "Hint", onHintClick)
-        ActionIcon(R.drawable.baseline_history_24, "Guess History", onHistoryClick)
+        ActionIcon(
+            R.drawable.baseline_hint,
+            stringResource(R.string.hint_icon_description),
+            onHintClick
+        )
+        ActionIcon(
+            R.drawable.baseline_history_24,
+            stringResource(R.string.history_icon_description),
+            onHistoryClick
+        )
     }
 }
 
@@ -67,11 +75,12 @@ fun ActionIcon(iconId: Int, description: String, onClick: () -> Unit) {
     )
 }
 
+@Composable
 fun getMaxNumber(difficulty: String): Int {
     return when (difficulty) {
-        "Easy" -> 50
-        "Medium" -> 100
-        "Hard" -> 200
+        stringResource(R.string.difficulty_easy) -> 50
+        stringResource(R.string.difficulty_medium) -> 100
+        stringResource(R.string.difficulty_hard) -> 200
         else -> 100
     }
 }

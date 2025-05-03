@@ -27,6 +27,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -35,6 +36,7 @@ import androidx.core.net.toUri
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.guessmaster.challenge.R
+import com.guessmaster.challenge.navigation.Screen
 import com.guessmaster.challenge.ui.components.settings.SettingOption
 import com.guessmaster.challenge.ui.components.settings.SettingToggle
 import com.guessmaster.challenge.ui.theme.montserrat
@@ -51,7 +53,7 @@ fun SettingsScreen(navController: NavController, viewModel: SettingsViewModel = 
         // Background Image
         Image(
             painter = painterResource(id = R.drawable.main_bg),
-            contentDescription = "Background",
+            contentDescription = stringResource(R.string.background_image_description),
             contentScale = ContentScale.Crop,
             modifier = Modifier.matchParentSize()
         )
@@ -62,7 +64,7 @@ fun SettingsScreen(navController: NavController, viewModel: SettingsViewModel = 
                 .padding(
                     horizontal = 16.dp,
                     vertical = 48.dp
-                ), // Adjusted top padding for better compatibility
+                ),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -74,12 +76,12 @@ fun SettingsScreen(navController: NavController, viewModel: SettingsViewModel = 
                 IconButton(onClick = { navController.popBackStack() }) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = "Back",
+                        contentDescription = stringResource(R.string.back_button_description),
                         tint = Color.White
                     )
                 }
                 Text(
-                    text = "Settings",
+                    text = stringResource(R.string.settings_title),
                     fontSize = 32.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.White,
@@ -102,7 +104,7 @@ fun SettingsScreen(navController: NavController, viewModel: SettingsViewModel = 
             ) {
                 // Sound Effects Toggle
                 SettingToggle(
-                    label = "Sound Effects",
+                    label = stringResource(R.string.sound_effects_label),
                     checked = isSoundEnabled,
                     onCheckedChange = {
                         viewModel.toggleSound(it)
@@ -113,7 +115,7 @@ fun SettingsScreen(navController: NavController, viewModel: SettingsViewModel = 
 
                 // Haptic Feedback Toggle
                 SettingToggle(
-                    label = "Haptic Feedback",
+                    label = stringResource(R.string.haptic_feedback_label),
                     checked = isHapticEnabled,
                     onCheckedChange = {
                         viewModel.toggleHaptic(it)
@@ -122,9 +124,20 @@ fun SettingsScreen(navController: NavController, viewModel: SettingsViewModel = 
 
                 Spacer(modifier = Modifier.height(16.dp))
 
+                // Change Language Button
+                SettingOption(
+                    label = stringResource(R.string.change_language_label),
+                    icon = Icons.Default.Star,
+                    onClick = {
+                        navController.navigate(Screen.Languages.route)
+                    }
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
                 // Rate App Button
                 SettingOption(
-                    label = "Rate this App",
+                    label = stringResource(R.string.rate_app_label),
                     icon = Icons.Default.Star,
                     onClick = {
                         val intent = Intent(
@@ -137,20 +150,23 @@ fun SettingsScreen(navController: NavController, viewModel: SettingsViewModel = 
 
                 Spacer(modifier = Modifier.height(16.dp))
 
+                val shareMessage = stringResource(R.string.share_app_message)
+                val shareVia = stringResource(R.string.share_via)
+
                 // Share App Button
                 SettingOption(
-                    label = "Share this App",
+                    label = stringResource(R.string.share_app_label),
                     icon = Icons.Default.Share,
                     onClick = {
                         val shareIntent = Intent().apply {
                             action = Intent.ACTION_SEND
                             putExtra(
                                 Intent.EXTRA_TEXT,
-                                "Check out this amazing game: https://play.google.com/store/apps/details?id=com.guessmaster.challenge"
+                                shareMessage
                             )
                             type = "text/plain"
                         }
-                        context.startActivity(Intent.createChooser(shareIntent, "Share via"))
+                        context.startActivity(Intent.createChooser(shareIntent, shareVia))
                     }
                 )
             }

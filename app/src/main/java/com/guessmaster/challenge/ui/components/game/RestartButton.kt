@@ -41,10 +41,12 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.guessmaster.challenge.R
 import com.guessmaster.challenge.ui.theme.montserrat
 
 @Composable
@@ -66,15 +68,6 @@ fun RestartButton(onClick: () -> Unit) {
         targetValue = if (isPressed) 2f else if (isHovered) 16f else 8f,
         animationSpec = tween(durationMillis = 200),
         label = "shadowElevation"
-    )
-
-    val buttonRotation by animateFloatAsState(
-        targetValue = if (isPressed) -5f else 0f,
-        animationSpec = spring(
-            dampingRatio = Spring.DampingRatioMediumBouncy,
-            stiffness = Spring.StiffnessMedium
-        ),
-        label = "buttonRotation"
     )
 
     val iconRotation by animateFloatAsState(
@@ -148,10 +141,6 @@ fun RestartButton(onClick: () -> Unit) {
                     isPressed = true
                     onClick()
                 },
-//                .hoverable(
-//                    onEnter = { isHovered = true; false },
-//                    onExit = { isHovered = false; false }
-//                ),
             contentAlignment = Alignment.Center
         ) {
             // Inner highlight for 3D effect
@@ -196,7 +185,7 @@ fun RestartButton(onClick: () -> Unit) {
                 ) {
                     Icon(
                         imageVector = Icons.Rounded.Refresh,
-                        contentDescription = "Restart",
+                        contentDescription = stringResource(R.string.restart_button_description),
                         tint = Color.White,
                         modifier = Modifier.fillMaxSize()
                     )
@@ -206,7 +195,7 @@ fun RestartButton(onClick: () -> Unit) {
 
                 // Text with 3D effect
                 Text(
-                    text = "Restart Game",
+                    text = stringResource(R.string.restart_button_text),
                     style = TextStyle(
                         fontFamily = montserrat,
                         fontWeight = FontWeight.Bold,

@@ -7,6 +7,7 @@ import androidx.navigation.compose.rememberNavController
 import com.guessmaster.challenge.ui.screen.levelscreen.GameByLevelScreen
 import com.guessmaster.challenge.ui.screen.gamescreen.GameScreen
 import com.guessmaster.challenge.ui.screen.homescreen.MainScreen
+import com.guessmaster.challenge.ui.screen.language.LanguageSelectionScreen
 import com.guessmaster.challenge.ui.screen.settingscreen.SettingsScreen
 
 @Composable
@@ -25,6 +26,9 @@ fun AppNavigation() {
         }
         composable(Screen.Settings.route) {
             SettingsScreen(navController)
+        }
+        composable(Screen.Languages.route) {
+            LanguageSelectionScreen(navController)
         }
     }
 }

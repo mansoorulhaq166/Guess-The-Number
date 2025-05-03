@@ -40,12 +40,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import com.guessmaster.challenge.R
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -160,7 +162,7 @@ fun ExitDialog(
                         Spacer(modifier = Modifier.height(16.dp))
 
                         Text(
-                            text = "Exit Game?",
+                            text = stringResource(id = R.string.exit_dialog_title),
                             fontWeight = FontWeight.Bold,
                             fontSize = 24.sp,
                             color = textPrimary,
@@ -168,7 +170,7 @@ fun ExitDialog(
                         )
 
                         Text(
-                            text = "Your progress will be lost. Are you sure you want to exit?",
+                            text = stringResource(id = R.string.exit_dialog_description),
                             color = textSecondary,
                             fontSize = 16.sp,
                             textAlign = TextAlign.Center,
@@ -201,7 +203,7 @@ fun ExitDialog(
                                 shape = RoundedCornerShape(12.dp)
                             ) {
                                 Text(
-                                    "Cancel",
+                                    text = stringResource(id = R.string.exit_dialog_cancel),
                                     fontWeight = FontWeight.Medium,
                                     fontSize = 16.sp,
                                     color = lightPurple
@@ -240,7 +242,7 @@ fun ExitDialog(
                                         )
                                         Spacer(modifier = Modifier.width(8.dp))
                                         Text(
-                                            "Exit",
+                                            text = stringResource(id = R.string.exit_dialog_exit),
                                             color = textPrimary,
                                             fontWeight = FontWeight.Medium,
                                             fontSize = 16.sp

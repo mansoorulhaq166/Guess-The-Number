@@ -9,6 +9,7 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 
 private val DarkColorScheme = darkColorScheme(
     primary = PrimaryVariant,
@@ -35,6 +36,9 @@ private val LightColorScheme = lightColorScheme(
     onSurface = OnSurfaceColor,
     onError = OnErrorColor
 )
+
+val buttonSpacing = 16.dp
+val screenPadding = 16.dp
 
 @Composable
 fun GuessTheNumberTheme(

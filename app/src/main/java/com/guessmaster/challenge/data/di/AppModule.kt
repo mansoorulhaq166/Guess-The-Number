@@ -1,6 +1,7 @@
 package com.guessmaster.challenge.data.di
 
 import android.content.Context
+import android.content.res.Resources
 import com.guessmaster.challenge.data.repository.GameRepository
 import com.guessmaster.challenge.data.repository.SettingsRepository
 import com.guessmaster.challenge.utils.DataStoreManager
@@ -17,8 +18,20 @@ object AppModule {
 
     @Provides
     @Singleton
+    fun provideResources(@ApplicationContext context: Context): Resources {
+        return context.resources
+    }
+
+    @Provides
+    @Singleton
+    fun providesContext(@ApplicationContext context: Context): Context {
+        return context
+    }
+
+    @Provides
+    @Singleton
     fun provideDataStoreManager(@ApplicationContext context: Context): DataStoreManager {
-        return DataStoreManager(context)
+        return DataStoreManager.getInstance(context)
     }
 
     @Provides

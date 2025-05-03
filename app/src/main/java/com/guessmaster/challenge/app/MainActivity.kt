@@ -1,6 +1,7 @@
-package com.guessmaster.challenge
+package com.guessmaster.challenge.app
 
 import android.app.Activity
+import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -13,11 +14,15 @@ import androidx.activity.enableEdgeToEdge
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.guessmaster.challenge.navigation.AppNavigation
 import com.guessmaster.challenge.ui.theme.GuessTheNumberTheme
+import com.guessmaster.challenge.utils.DataStoreManager
+import com.guessmaster.challenge.utils.LocaleUtils
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 @Suppress("DEPRECATION")
 @AndroidEntryPoint
@@ -56,6 +61,14 @@ class MainActivity : ComponentActivity() {
             window.decorView.setOnSystemUiVisibilityChangeListener(listener)
         }
         hideSystemUI()
+    }
+
+    override fun attachBaseContext(newBase: Context) {
+        val prefs = DataStoreManager.getInstance(newBase)
+        runBlocking {
+            val langCode = prefs.selectedLanguageCode.first() ?: "en"
+            super.attachBaseContext(LocaleUtils.wrapContext(newBase, langCode))
+        }
     }
 
     private fun Activity.hideSystemUI() {

@@ -1,8 +1,10 @@
 package com.guessmaster.challenge.ui.screen.gamescreen
 
+import android.content.res.Resources
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.guessmaster.challenge.R
 import com.guessmaster.challenge.domain.EvaluateGuessUseCase
 import com.guessmaster.challenge.domain.ProvideHintUseCase
 import com.guessmaster.challenge.data.models.GameState
@@ -17,6 +19,7 @@ class GameViewModel @Inject constructor(
     private val evaluateGuessUseCase: EvaluateGuessUseCase,
     private val provideHintUseCase: ProvideHintUseCase,
     private val getGameSettingsUseCase: GetGameSettingsUseCase,
+    private val resources: Resources,
     settingsRepository: SettingsRepository
 ) : ViewModel() {
 
@@ -48,11 +51,11 @@ class GameViewModel @Inject constructor(
     }
 
     fun requestHint(): String {
-        if (hintCount <= 0) return "No more hints available!"
+        if (hintCount <= 0) return resources.getString(R.string.no_more_hints)
 
         val currentState = gameState.value
         if (currentState !is GameState.InProgress) {
-            return "Start the game first!"
+            return resources.getString(R.string.start_game_first)
         }
 
         hintCount--

@@ -1,0 +1,112 @@
+<resources>
+    <string name="app_name">گیس ماسٹر</string>
+
+    <!-- Main Screen -->
+    <string name="background_image_desc">پس منظر کی تصویر</string>
+    <string name="game_title">نمبر کا اندازہ لگائیں</string>
+    <string name="quick_play">فوری کھیل</string>
+    <string name="level_challenge">لیول چیلنج</string>
+    <string name="game_settings">گیم کی ترتیبات</string>
+    <string name="leaderboard">لیڈر بورڈ</string>
+
+    <!-- Game Screens -->
+    <string name="guess_the_number_title">نمبر کا اندازہ لگائیں!</string>
+    <string name="number_placeholder">؟</string>
+    <string name="action_delete">حذف کریں</string>
+    <string name="action_submit">جمع کروائیں</string>
+
+    <!-- Game State Messages -->
+    <string name="game_not_started">1 اور %1$d کے درمیان نمبر کا اندازہ لگانا شروع کریں</string>
+    <string name="game_attempts">کوششیں: %1$d / %2$d</string>
+    <string name="game_remaining">باقی: %1$d</string>
+    <string name="game_won">🎉 مبارک ہو! آپ نے %1$d کوششوں میں اندازہ لگا لیا!</string>
+    <string name="game_lost">❌ گیم ختم! نمبر تھا %1$d</string>
+
+    <!-- Hint Messages -->
+    <string name="hint_too_low">بہت کم!</string>
+    <string name="hint_too_high">بہت زیادہ!</string>
+    <string name="hint_ice_cold">❄️ برف جتنا ٹھنڈا! آپ بہت دور ہیں۔ بڑی تبدیلی کی ضرورت ہے۔</string>
+    <string name="hint_far">آپ ہدف سے بہت دور ہیں۔ نمایاں طور پر تبدیل کریں۔</string>
+    <string name="hint_closer">قریب آ رہے ہیں! تقریباً 10 تک ایڈجسٹ کریں۔</string>
+    <string name="hint_very_close">🔥 بہت قریب! اپنے اندازے کو بہتر بنائیں۔</string>
+    <string name="hint_almost_there">🔥 تقریباً پہنچ گئے!</string>
+    <string name="no_more_hints">مزید اشارے دستیاب نہیں!</string>
+    <string name="start_game_first">پہلے گیم شروع کریں!</string>
+
+    <!-- Number Properties Hints -->
+    <string name="provide_hint_even_odd">نمبر %s ہے۔</string>
+    <string name="provide_hint_even">جفت</string>
+    <string name="provide_hint_odd">طاق</string>
+    <string name="provide_hint_multiple">یہ %s ہے۔</string>
+    <string name="provide_hint_multiple_10">10 کا ضرب</string>
+    <string name="provide_hint_multiple_5">5 کا ضرب</string>
+    <string name="provide_hint_multiple_3">3 کا ضرب</string>
+    <string name="provide_hint_not_multiple">3، 5، یا 10 کا ضرب نہیں</string>
+    <string name="provide_hint_range">یہ %s کی رینج میں آتا ہے۔</string>
+    <string name="provide_hint_range_1_50">1 اور 50 کے درمیان</string>
+    <string name="provide_hint_range_51_100">51 اور 100 کے درمیان</string>
+    <string name="provide_hint_range_101_150">101 اور 150 کے درمیان</string>
+    <string name="provide_hint_range_151_200">151 اور 200 کے درمیان</string>
+    <string name="provide_hint_digits">پہلا ہندسہ %1$s ہے، اور آخری ہندسہ %2$s ہے۔</string>
+
+    <!-- Difficulty Levels -->
+    <string name="select_difficulty_label">مشکل کی سطح منتخب کریں</string>
+    <string name="difficulty_easy">آسان</string>
+    <string name="difficulty_medium">درمیانی</string>
+    <string name="difficulty_hard">مشکل</string>
+
+    <!-- Level Challenge -->
+    <string name="level_indicator">لیول: %1$d/%2$d</string>
+    <string name="level_start_message">لیول %1$d: 1 اور %2$d کے درمیان اندازہ لگائیں</string>
+    <string name="attempts_indicator">کوششیں: %d</string>
+    <string name="attempts_status">کوششیں: %1$d / %2$d</string>
+    <string name="remaining_attempts">باقی: %d</string>
+    <string name="level_complete_description">لیول مکمل</string>
+    <string name="level_complete_message">🎉 لیول %d مکمل!</string>
+    <string name="guessed_in_attempts">%d کوششوں میں اندازہ لگایا</string>
+    <string name="level_failed_description">لیول ناکام</string>
+    <string name="level_failed_message">❌ لیول %d ناکام</string>
+    <string name="secret_number_reveal">نمبر تھا %d</string>
+    <string name="next_level_button">اگلا</string>
+    <string name="next_level_description">اگلا لیول</string>
+    <string name="retry_level_button">لیول دوبارہ کریں</string>
+    <string name="retry_level_description">لیول دوبارہ کریں</string>
+    <string name="new_game_button">نیا کھیل</string>
+
+    <!-- Game Actions -->
+    <string name="hint_button">اشارہ</string>
+    <string name="hint_description">اشارہ حاصل کریں</string>
+    <string name="hint_icon_description">اشارہ</string>
+    <string name="hint_dialog_title">اشارہ</string>
+    <string name="history_button">تاریخچہ</string>
+    <string name="history_description">تاریخچہ دیکھیں</string>
+    <string name="history_icon_description">اندازوں کی تاریخ</string>
+    <string name="guess_history_title">اندازوں کی تاریخ</string>
+    <string name="guess_item_format">اندازہ: %d</string>
+    <string name="restart_button_description">دوبارہ شروع</string>
+    <string name="restart_button_text">کھیل دوبارہ شروع کریں</string>
+
+    <!-- Dialogs -->
+    <string name="exit_dialog_title">کھیل سے باہر نکلیں؟</string>
+    <string name="exit_dialog_description">آپ کی پیشرفت ضائع ہو جائے گی۔ کیا آپ واقعی باہر نکلنا چاہتے ہیں؟</string>
+    <string name="exit_dialog_cancel">منسوخ کریں</string>
+    <string name="exit_dialog_exit">باہر نکلیں</string>
+    <string name="close_button_description">بند کریں</string>
+
+    <!-- Settings -->
+    <string name="settings_title">ترتیبات</string>
+    <string name="back_button_description">پیچھے</string>
+    <string name="background_image_description">پس منظر</string>
+    <string name="sound_effects_label">آواز کے اثرات</string>
+    <string name="haptic_feedback_label">ہیپٹک فیڈ بیک</string>
+    <string name="change_language_label">زبان تبدیل کریں</string>
+    <string name="rate_app_label">ایپ کو ریٹ کریں</string>
+    <string name="share_app_label">ایپ شیئر کریں</string>
+    <string name="share_app_message">اس زبردست گیم کو دیکھیں: https://play.google.com/store/apps/details?id=com.guessmaster.challenge</string>
+    <string name="share_via">کے ذریعے شیئر کریں</string>
+
+    <!-- Language Selection -->
+    <string name="choose_language">اپنی زبان منتخب کریں</string>
+    <string name="select_language_hint">جاری رکھنے کے لیے اپنی پسندیدہ زبان منتخب کریں</string>
+    <string name="button_continue">جاری رکھیں</string>
+</resources>

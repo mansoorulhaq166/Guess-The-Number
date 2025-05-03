@@ -8,7 +8,9 @@ import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -23,10 +25,12 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shadow
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.TileMode
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.guessmaster.challenge.ui.theme.bungee
@@ -35,38 +39,52 @@ import com.guessmaster.challenge.ui.theme.bungee
 fun GradientButton(
     text: String,
     onClick: () -> Unit,
-    gradient: List<Color>
+    gradient: List<Color>,
+    modifier: Modifier = Modifier,
+    shape: Shape = RoundedCornerShape(36.dp),
+    elevation: Dp = 12.dp,
+    pressedElevation: Dp = 4.dp,
+    scaleDownFactor: Float = 0.95f,
+    textStyle: TextStyle = TextStyle(
+        fontSize = 22.sp,
+        fontWeight = FontWeight.Bold,
+        fontFamily = bungee
+    )
 ) {
     var isPressed by remember { mutableStateOf(false) }
 
-    val scale by animateFloatAsState(
-        targetValue = if (isPressed) 0.92f else 1f,
-        animationSpec = tween(durationMillis = 100),
-        label = "button_press_animation"
+    val animatedScale by animateFloatAsState(
+        targetValue = if (isPressed) scaleDownFactor else 1f,
+        animationSpec = tween(durationMillis = 150),
+        label = "button_scale_animation"
     )
 
-    val elevation by animateDpAsState(
-        targetValue = if (isPressed) 4.dp else 12.dp, // Changes depth on press
-        animationSpec = tween(durationMillis = 100),
+    val animatedElevation by animateDpAsState(
+        targetValue = if (isPressed) pressedElevation else elevation,
+        animationSpec = tween(durationMillis = 150),
         label = "button_elevation_animation"
     )
 
     Box(
         contentAlignment = Alignment.Center,
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth(0.7f)
-            .height(60.dp)
-            .scale(scale) // Press effect
-            .clip(RoundedCornerShape(36.dp))
+            .height(64.dp)
             .shadow(
-                elevation = elevation, // Dynamic shadow effect
-                shape = RoundedCornerShape(24.dp),
-                ambientColor = Color.Black.copy(alpha = 0.5f),
-                spotColor = Color.Black.copy(alpha = 0.3f)
+                elevation = animatedElevation,
+                shape = shape,
+                ambientColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.2f),
+                spotColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
+                clip = true
             )
+            .clip(shape)
             .background(
-                brush = Brush.verticalGradient(gradient), // Glossy gradient
-                shape = RoundedCornerShape(36.dp)
+                brush = Brush.linearGradient(
+                    colors = gradient,
+                    start = Offset(0f, 0f),
+                    end = Offset(100f, 100f), // Fixed values work well for button size
+                    tileMode = TileMode.Mirror
+                )
             )
             .pointerInput(Unit) {
                 detectTapGestures(
@@ -74,24 +92,19 @@ fun GradientButton(
                         isPressed = true
                         tryAwaitRelease()
                         isPressed = false
-                        onClick() // Ensure navigation works
+                        onClick()
                     }
                 )
             }
+            .scale(animatedScale)
+            .padding(horizontal = 8.dp)
     ) {
         Text(
             text = text,
-            fontSize = 22.sp, // Bigger for emphasis
-            fontWeight = FontWeight.Bold,
+            style = textStyle,
             color = Color.White,
-            fontFamily = bungee,
-            style = TextStyle( // Correct way to apply shadow
-                shadow = Shadow(
-                    color = Color.Black.copy(alpha = 0.3f),
-                    offset = Offset(2f, 2f),
-                    blurRadius = 4f
-                )
-            )
+            modifier = Modifier.padding(vertical = 8.dp),
+            maxLines = 1
         )
     }
 }

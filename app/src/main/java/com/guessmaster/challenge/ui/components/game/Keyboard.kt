@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -38,7 +39,7 @@ fun NumberEntry(
     ) {
         // Input field (non-editable)
         OutlinedTextField(
-            value = enteredNumber.ifEmpty { "?" },
+            value = enteredNumber.ifEmpty { stringResource(R.string.number_placeholder) },
             onValueChange = {},
             readOnly = true,
             textStyle = androidx.compose.ui.text.TextStyle(
@@ -76,7 +77,12 @@ fun NumberEntry(
                             .clip(CircleShape),
                         colors = ButtonDefaults.buttonColors(containerColor = buttonBackground)
                     ) {
-                        Text(text = number.toString(), fontSize = 20.sp, fontFamily = montserrat, color = Color.White)
+                        Text(
+                            text = number.toString(),
+                            fontSize = 20.sp,
+                            fontFamily = montserrat,
+                            color = Color.White
+                        )
                     }
                 }
             }
@@ -108,7 +114,7 @@ fun NumberEntry(
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.baseline_backspace_24),
-                    contentDescription = "Delete",
+                    contentDescription = stringResource(R.string.action_delete),
                     tint = Color.White
                 )
             }
@@ -122,7 +128,7 @@ fun NumberEntry(
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.baseline_check_24),
-                    contentDescription = "Submit",
+                    contentDescription = stringResource(R.string.action_submit),
                     tint = Color.White
                 )
             }

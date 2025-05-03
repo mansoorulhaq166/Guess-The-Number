@@ -13,12 +13,6 @@ class MainViewModel @Inject constructor() : ViewModel() {
     private val _showLeaderboardButton = MutableStateFlow(false)
     val showLeaderboardButton: StateFlow<Boolean> = _showLeaderboardButton
 
-//    init {
-//        viewModelScope.launch {
-//            _showLeaderboardButton.value = true
-//        }
-//    }
-
     fun onPlayGame(navController: NavController) {
         navController.navigate("game")
     }

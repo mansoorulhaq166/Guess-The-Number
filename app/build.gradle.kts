@@ -1,3 +1,5 @@
+import org.gradle.kotlin.dsl.implementation
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -54,6 +56,8 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
 
     implementation("androidx.datastore:datastore-preferences:1.1.3")
+    implementation("nl.dionsegijn:konfetti-compose:2.0.3")
+    implementation("androidx.appcompat:appcompat:1.7.0")
 
     implementation(libs.androidx.junit.ktx)
     implementation(libs.androidx.ui.test.junit4.android)
